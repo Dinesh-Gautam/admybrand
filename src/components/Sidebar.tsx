@@ -10,7 +10,7 @@ import CloseIcon from "./icons/CloseIcon";
 import Logo from "./icons/Logo";
 import ExpandCollapseIcon from "./icons/ExpandCollapseIcon";
 import { SmartAlertsFeed } from "./dashboard/SmartAlertsFeed";
-import AiIcon from "./icons/AiIcon";
+import AiIcon from "@/components/icons/AiIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -178,8 +178,8 @@ const Sidebar = ({
         ref={sidebar}
         className={`flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 p-4 transition-all duration-200 ease-in-out bg-transparent  ${
           sidebarOpen
-            ? "translate-x-0  !bg-white/70 backdrop-blur-xl"
-            : "-translate-x-64 "
+            ? "translate-x-0  bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl"
+            : "-translate-x-64"
         } ${
           variant === "v2"
             ? "border-r border-gray-200 dark:border-gray-700/60 "
@@ -202,8 +202,8 @@ const Sidebar = ({
           </Link>
         </div>
 
-        <div className="space-y-8">
-          <div>
+        <div className="space-y-8 flex-1">
+          <div className="h-full">
             <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
               <span
                 className="hidden lg:block lg:sidebar-expanded:hidden 2xl:hidden text-center w-6"
@@ -215,7 +215,7 @@ const Sidebar = ({
                 Pages
               </span>
             </h3>
-            <ul className="mt-3">
+            <ul className="mt-3 h-full">
               {MENU_ITEMS.map((item) =>
                 item.submenu ? (
                   <SidebarLinkGroup
@@ -230,6 +230,19 @@ const Sidebar = ({
                   renderMenuItem(item)
                 )
               )}
+              <button
+                onClick={() => setAlertsOpen(!alertsOpen)}
+                className={`sm:opacity-0 sm:pointer-events-none pl-4 w-full pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r hover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800/50`}
+              >
+                <div className="flex items-center justify-between">
+                  <div className="grow flex items-center">
+                    <AiIcon className="mt-0.5" />
+                    <span className="text-sm font-medium ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                      Smart Alerts
+                    </span>
+                  </div>
+                </div>
+              </button>
             </ul>
           </div>
         </div>

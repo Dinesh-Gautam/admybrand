@@ -42,14 +42,6 @@ const DashboardCard = ({
                 Option 2
               </Link>
             </li>
-            <li>
-              <Link
-                className="font-medium text-sm text-red-500 hover:text-red-600 flex py-1 px-3"
-                href="#0"
-              >
-                Remove
-              </Link>
-            </li>
           </EditMenu>
         </header>
         <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">

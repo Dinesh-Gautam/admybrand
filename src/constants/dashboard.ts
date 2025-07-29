@@ -523,11 +523,18 @@ export const reasonForRefundsChartData = {
       label: "Refunds",
       data: [131, 100, 81, 65, 72],
       backgroundColor: [
-        getCssVariable("--color-violet-500") || "var(--color-violet-500)",
-        getCssVariable("--color-violet-700") || "var(--color-violet-700)",
-        getCssVariable("--color-sky-500") || "var(--color-sky-500)",
-        getCssVariable("--color-green-500") || "var(--color-green-500)",
-        getCssVariable("--color-gray-200") || "var(--color-gray-200)",
+        getCssVariable("--color-violet-500"),
+        getCssVariable("--color-violet-700"),
+        getCssVariable("--color-sky-500"),
+        getCssVariable("--color-green-500"),
+        getCssVariable("--color-gray-200"),
+      ],
+      backgroundColorLegend: [
+        "var(--color-violet-500)",
+        "var(--color-violet-700)",
+        "var(--color-sky-500)",
+        "var(--color-green-500)",
+        "var(--color-gray-200)",
       ],
       hoverBackgroundColor: [
         getCssVariable("--color-violet-600"),

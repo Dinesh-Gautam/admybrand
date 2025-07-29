@@ -7,7 +7,7 @@ function SalesOverTimeCard() {
     <div className="flex flex-col col-span-full sm:col-span-6 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
-          Sales Over Time (all stores)
+          Sales Over Time
         </h2>
       </header>
       <LineChart

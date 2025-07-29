@@ -74,13 +74,14 @@ const Header = ({
 
           <div className="flex items-center space-x-3">
             <button
-              className="w-fit text-left hhover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800 px-4 py-1 pl-3 rounded-lg"
+              className="hidden sm:flex w-fit text-left hover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800 px-4 py-1 pl-3 rounded-lg"
               onClick={() => setAlertsOpen(!alertsOpen)}
             >
-              <div className="flex items-center w-fit">
+              <div className="flex items-center w-fit ">
                 <AiIcon className="mt-0.5" />
-                <span className="text-sm font-medium ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                <span className="text-sm font-medium ml-2 relative">
                   Smart Alerts
+                  <div className="absolute top-0 -right-2 h-2 w-2 border-2 border-white bg-red-500 rounded-full"></div>
                 </span>
               </div>
             </button>

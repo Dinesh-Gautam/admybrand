@@ -1,6 +1,6 @@
 import React from "react";
 import { TypingAnimation } from "@/components/magicui/typing-animation";
-import AiIcon from "../icons/AiIcon";
+import AiIcon from "@/components/icons/AiIcon";
 
 const AiInsightSummaryCard = () => {
   return (
@@ -9,7 +9,7 @@ const AiInsightSummaryCard = () => {
         AI insights
       </span>
       <div className="p-5 flex items-start">
-        <div className="w-6 h-6 ">
+        <div className="w-6 h-6 contain-paint isolate">
           <AiIcon />
         </div>
         <div className="ml-4">

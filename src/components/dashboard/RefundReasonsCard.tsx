@@ -35,7 +35,7 @@ function RefundReasonsCard() {
               className="block w-3 h-3 rounded-full mr-2"
               style={{
                 backgroundColor: reasonForRefundsChartData.datasets[0]
-                  .backgroundColor[0] as string,
+                  .backgroundColorLegend[0] as string,
               }}
             ></span>
             <span>Having difficulties using the product</span>
@@ -48,7 +48,7 @@ function RefundReasonsCard() {
               className="block w-3 h-3 rounded-full mr-2"
               style={{
                 backgroundColor: reasonForRefundsChartData.datasets[0]
-                  .backgroundColor[1] as string,
+                  .backgroundColorLegend[1] as string,
               }}
             ></span>
             <span>Missing features I need</span>
@@ -61,7 +61,7 @@ function RefundReasonsCard() {
               className="block w-3 h-3 rounded-full mr-2"
               style={{
                 backgroundColor: reasonForRefundsChartData.datasets[0]
-                  .backgroundColor[2] as string,
+                  .backgroundColorLegend[2] as string,
               }}
             ></span>
             <span>Not satisfied about the quality of the product</span>
@@ -74,7 +74,7 @@ function RefundReasonsCard() {
               className="block w-3 h-3 rounded-full mr-2"
               style={{
                 backgroundColor: reasonForRefundsChartData.datasets[0]
-                  .backgroundColor[3] as string,
+                  .backgroundColorLegend[3] as string,
               }}
             ></span>
             <span>The product doesn’t look as advertised</span>
@@ -87,7 +87,7 @@ function RefundReasonsCard() {
               className="block w-3 h-3 rounded-full mr-2"
               style={{
                 backgroundColor: reasonForRefundsChartData.datasets[0]
-                  .backgroundColor[4] as string,
+                  .backgroundColorLegend[4] as string,
               }}
             ></span>
             <span>Other</span>

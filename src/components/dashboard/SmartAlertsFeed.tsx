@@ -15,6 +15,7 @@ import {
 import { useState } from "react";
 
 interface Item {
+  id: number;
   name: string;
   description: string;
   time: string;
@@ -24,6 +25,7 @@ interface Item {
 
 const notifications: Item[] = [
   {
+    id: 1,
     name: "Conversions jumped by 12% in India",
     description: "Campaign B is outperforming A.",
     time: "15m ago",
@@ -31,6 +33,7 @@ const notifications: Item[] = [
     color: "#00C9A7",
   },
   {
+    id: 2,
     name: "Sales dipped unusually low on mobile",
     description: "Last week's mobile sales were 30% lower than average.",
     time: "10m ago",
@@ -38,6 +41,7 @@ const notifications: Item[] = [
     color: "#FFB800",
   },
   {
+    id: 3,
     name: "New message from a high-value customer",
     description: "John Doe just sent you a message.",
     time: "5m ago",
@@ -45,6 +49,7 @@ const notifications: Item[] = [
     color: "#FF3D71",
   },
   {
+    id: 4,
     name: "Server usage is reaching its limit",
     description: "CPU usage is at 90%.",
     time: "2m ago",
@@ -53,6 +58,7 @@ const notifications: Item[] = [
   },
   // AI-like suggestions
   {
+    id: 5,
     name: "AI recommends increasing ad budget",
     description: "Boost your budget by 15% to maximize reach this week.",
     time: "Just now",
@@ -60,6 +66,7 @@ const notifications: Item[] = [
     color: "#6C63FF",
   },
   {
+    id: 6,
     name: "AI detected trending keywords",
     description:
       "Consider adding 'Eco-friendly' to your campaign for higher engagement.",
@@ -68,6 +75,7 @@ const notifications: Item[] = [
     color: "#00C9A7",
   },
   {
+    id: 7,
     name: "AI suggests new audience segment",
     description: "Target users aged 25-34 for better conversion rates.",
     time: "3m ago",
@@ -75,6 +83,7 @@ const notifications: Item[] = [
     color: "#FF3D71",
   },
   {
+    id: 8,
     name: "AI flagged unusual traffic spike",
     description: "Website visits increased by 40% in the last hour.",
     time: "7m ago",
@@ -82,6 +91,7 @@ const notifications: Item[] = [
     color: "#6C63FF",
   },
   {
+    id: 9,
     name: "AI recommends creative refresh",
     description:
       "Your ad creatives are showing signs of fatigue. Try updating images.",
@@ -124,7 +134,7 @@ const Notification = ({
             <span className="mx-1">·</span>
             <span className="text-xs text-gray-500">{time}</span>
           </figcaption>
-          <p className="text-xs font-normal dark:text-white/60">
+          <p className="text-xs font-normal dark:text-white/60 max-w-[98%]">
             {description}
           </p>
         </div>
@@ -136,7 +146,7 @@ const Notification = ({
         <X className="h-4 w-4" />
       </button>
       <div className="absolute right-2 bottom-2">
-        <AiIcon className="h-5 w-5 mt-0.5 text-blue-500" />
+        <AiIcon className="h-5 w-5 mt-0.5" />
       </div>
     </figure>
   );
@@ -176,14 +186,23 @@ export function SmartAlertsFeed({
           </button>
         )}
       </div>
-      <AnimatedList delay={2000} className="flex flex-col gap-2">
-        {notificationsState.map((item, idx) => (
-          <Notification
-            {...item}
-            key={idx}
-            onClose={() => handleRemoveNotification(idx)}
-          />
-        ))}
+      <AnimatedList
+        delay={Math.round(Math.random() * 5000 + 100)}
+        className="flex flex-col gap-2"
+      >
+        {notificationsState && notificationsState.length > 0 ? (
+          notificationsState.map((item, idx) => (
+            <Notification
+              {...item}
+              key={item.id}
+              onClose={() => handleRemoveNotification(idx)}
+            />
+          ))
+        ) : (
+          <div className="text-gray-500 dark:text-gray-300 text-sm text-center">
+            No notifications available.
+          </div>
+        )}
       </AnimatedList>
     </div>
   );
