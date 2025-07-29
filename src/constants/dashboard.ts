@@ -1,7 +1,7 @@
 import { chartAreaGradient } from "@/components/charts/ChartjsConfig";
 import { adjustColorOpacity, getCssVariable } from "@/utils/chart";
 
-export const acmePlusChartData = {
+export const PlusChartData = {
   labels: [
     "12-01-2022",
     "01-01-2023",
@@ -111,7 +111,7 @@ export const acmePlusChartData = {
   ],
 };
 
-export const acmeAdvancedChartData = {
+export const AdvancedChartData = {
   labels: [
     "12-01-2022",
     "01-01-2023",
@@ -221,7 +221,7 @@ export const acmeAdvancedChartData = {
   ],
 };
 
-export const acmeProfessionalChartData = {
+export const ProfessionalChartData = {
   labels: [
     "12-01-2022",
     "01-01-2023",

@@ -1,6 +1,5 @@
-import React from "react";
-import { TypingAnimation } from "@/components/magicui/typing-animation";
 import AiIcon from "@/components/icons/AiIcon";
+import { TextAnimate } from "@/components/magicui/text-animate";
 
 const AiInsightSummaryCard = () => {
   return (
@@ -13,13 +12,14 @@ const AiInsightSummaryCard = () => {
           <AiIcon />
         </div>
         <div className="ml-4">
-          <TypingAnimation
-            duration={10}
+          <TextAnimate
+            animation="blurIn"
+            duration={2}
             className="text-sm font-semibold text-gray-600 dark:text-gray-200 whitespace-break-spaces"
           >
             Sales grew by 13% over the past 30 days. AI detected a peak on April
             23 driven by indirect campaigns. Refunds dropped by 22%.
-          </TypingAnimation>
+          </TextAnimate>
         </div>
       </div>
     </div>
