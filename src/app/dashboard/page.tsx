@@ -7,6 +7,7 @@ import DashboardHeader from "./_components/DashboardHeader";
 import DashboardActions from "./_components/DashboardActions";
 import DashboardCardGrid from "./_components/DashboardCardGrid";
 import { FilterState } from "@/components/DropdownFilter";
+import AiInsightSummaryCard from "@/components/dashboard/AiInsightSummaryCard";
 
 export default function Dashboard() {
   const [alerOtsOpen, setAlertsOpen] = useState(false);
@@ -45,7 +46,10 @@ export default function Dashboard() {
         />
 
         <main className="grow">
-          <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+          <div
+            id="dashboard-content"
+            className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto"
+          >
             <div className="sm:flex sm:justify-between sm:items-center mb-8">
               <DashboardHeader />
               <DashboardActions onFilterChange={handleFilterChange} />
