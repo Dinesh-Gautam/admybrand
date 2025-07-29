@@ -5,6 +5,7 @@ import { topChannelsData } from "./TopChannelsData";
 import { useSorting } from "@/hooks/useSorting";
 import { usePagination } from "@/hooks/usePagination";
 import { motion, AnimatePresence } from "motion/react";
+import { FadeIn } from "@/components/magicui/FadeIn";
 
 function TopChannelsCard() {
   const { sortedData, requestSort, getSortDirection } =
@@ -23,7 +24,7 @@ function TopChannelsCard() {
   };
 
   return (
-    <div className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
+    <FadeIn className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           Top Channels
@@ -151,7 +152,7 @@ function TopChannelsCard() {
           </button>
         </div>
       </div>
-    </div>
+    </FadeIn>
   );
 }
 

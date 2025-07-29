@@ -7,6 +7,7 @@ import useRealtimeChart from "@/hooks/useRealtimeChart";
 
 // Import utilities
 import { adjustColorOpacity, getCssVariable } from "@/utils/chart";
+import { FadeIn } from "@/components/magicui/FadeIn";
 
 function RealtimeValueCard() {
   const { slicedData, slicedLabels } = useRealtimeChart(realTimeChartData);
@@ -55,7 +56,7 @@ function RealtimeValueCard() {
   };
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 shadow-xs rounded-xl glassmorphism">
+    <FadeIn className="flex flex-col col-span-full sm:col-span-6 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           Real Time Value
@@ -75,7 +76,7 @@ function RealtimeValueCard() {
         </Tooltip>
       </header>
       <RealtimeChart data={chartData as any} width={595} height={248} />
-    </div>
+    </FadeIn>
   );
 }
 

@@ -176,7 +176,7 @@ function DropdownExport() {
         aria-expanded={dropdownOpen}
       >
         <Download className="w-4 h-4 text-muted-foreground" />
-        <span className="hidden sm:initial ml-2">Export</span>
+        <span className="hidden sm:inline ml-2">Export</span>
       </button>
 
       <Transition
