@@ -40,7 +40,7 @@ function DropdownEditMenu({ children, align, ...rest }: DropdownEditMenuProps) {
   });
 
   return (
-    <div {...rest}>
+    <div className="relative" {...rest}>
       <button
         ref={trigger}
         className={`rounded-full ${
