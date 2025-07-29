@@ -117,7 +117,6 @@ const getChartOptions = (
     intersect: false,
     mode: "nearest" as "nearest",
   },
-  animation: false as false,
   maintainAspectRatio: false,
   resizeDelay: RESIZE_DELAY,
 });

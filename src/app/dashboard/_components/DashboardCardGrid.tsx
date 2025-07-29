@@ -16,19 +16,30 @@ import React from "react";
 const DashboardCardGrid = () => {
   return (
     <div className="grid grid-cols-12 gap-6">
+      {/* Sales Performance */}
       <AcmePlusSalesCard />
       <AcmeAdvancedSalesCard />
       <AcmeProfessionalSalesCard />
-      <DirectVsIndirectCard />
+
+      {/* Real-time Data */}
       <RealtimeValueCard />
-      <TopCountriesCard />
-      <TopChannelsCard />
+
+      {/* Sales Analysis */}
       <SalesOverTimeCard />
       <SalesVsRefundsCard />
+      <DirectVsIndirectCard />
+
+      {/* Acquisition */}
+      <TopChannelsCard />
+      <TopCountriesCard />
+
+      {/* Customer Activity */}
       <CustomersTableCard />
-      <RefundReasonsCard />
       <RecentActivityCard />
+
+      {/* Financials */}
       <IncomeExpensesCard />
+      <RefundReasonsCard />
     </div>
   );
 };
