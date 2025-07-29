@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useThemeProvider } from "@/utils/ThemeContext";
+import { useThemeProvider } from "@/utils/theme-provider";
 
 import { chartColors } from "./ChartjsConfig";
 import {
@@ -16,7 +16,7 @@ import {
 import "chartjs-adapter-moment";
 
 // Import utilities
-import { adjustColorOpacity, getCssVariable, formatValue } from "@/utils/Utils";
+import { adjustColorOpacity, getCssVariable, formatValue } from "@/utils/chart";
 
 Chart.register(
   LineController,
@@ -34,7 +34,95 @@ interface RealtimeChartProps {
   height: number;
 }
 
-function RealtimeChart({ data, width, height }: RealtimeChartProps) {
+const CHART_LAYOUT_PADDING = 20;
+const Y_AXIS_SUGGESTED_MIN = 30;
+const Y_AXIS_SUGGESTED_MAX = 80;
+const Y_AXIS_MAX_TICKS_LIMIT = 5;
+const X_AXIS_AUTO_SKIP_PADDING = 48;
+const RESIZE_DELAY = 200;
+const PERCENTAGE_MULTIPLIER = 100;
+const DEVIATION_BACKGROUND_OPACITY = 0.2;
+
+const getChartOptions = (
+  darkMode: boolean,
+  textColor: any,
+  gridColor: any,
+  tooltipTitleColor: any,
+  tooltipBodyColor: any,
+  tooltipBgColor: any,
+  tooltipBorderColor: any
+) => ({
+  layout: {
+    padding: CHART_LAYOUT_PADDING,
+  },
+  scales: {
+    y: {
+      border: {
+        display: false,
+      },
+      suggestedMin: Y_AXIS_SUGGESTED_MIN,
+      suggestedMax: Y_AXIS_SUGGESTED_MAX,
+      ticks: {
+        maxTicksLimit: Y_AXIS_MAX_TICKS_LIMIT,
+        callback: (value: any) => formatValue(value),
+        color: darkMode ? textColor.dark : textColor.light,
+      },
+      grid: {
+        color: darkMode ? gridColor.dark : gridColor.light,
+      },
+    },
+    x: {
+      type: "time" as "time",
+      time: {
+        parser: "hh:mm:ss",
+        unit: "second" as "second",
+        tooltipFormat: "MMM DD, H:mm:ss a",
+        displayFormats: {
+          second: "H:mm:ss",
+        },
+      },
+      border: {
+        display: false,
+      },
+      grid: {
+        display: false,
+      },
+      ticks: {
+        autoSkipPadding: X_AXIS_AUTO_SKIP_PADDING,
+        maxRotation: 0,
+        color: darkMode ? textColor.dark : textColor.light,
+      },
+    },
+  },
+  plugins: {
+    legend: {
+      display: false,
+    },
+    tooltip: {
+      titleFont: {
+        weight: "bold" as "bold",
+      },
+      callbacks: {
+        label: (context: any) => formatValue(context.parsed.y),
+      },
+      titleColor: darkMode ? tooltipTitleColor.dark : tooltipTitleColor.light,
+      bodyColor: darkMode ? tooltipBodyColor.dark : tooltipBodyColor.light,
+      backgroundColor: darkMode ? tooltipBgColor.dark : tooltipBgColor.light,
+      borderColor: darkMode
+        ? tooltipBorderColor.dark
+        : tooltipBorderColor.light,
+    },
+  },
+  interaction: {
+    intersect: false,
+    mode: "nearest" as "nearest",
+  },
+  animation: false as false,
+  maintainAspectRatio: false,
+  resizeDelay: RESIZE_DELAY,
+});
+
+const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
   const [chart, setChart] = useState<Chart | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const chartValue = useRef<HTMLSpanElement>(null);
@@ -53,127 +141,62 @@ function RealtimeChart({ data, width, height }: RealtimeChartProps) {
   useEffect(() => {
     const ctx = canvas.current;
     if (!ctx) return;
-    // eslint-disable-next-line no-unused-vars
+
     const newChart = new Chart(ctx, {
       type: "line",
       data: data,
-      options: {
-        layout: {
-          padding: 20,
-        },
-        scales: {
-          y: {
-            border: {
-              display: false,
-            },
-            suggestedMin: 30,
-            suggestedMax: 80,
-            ticks: {
-              maxTicksLimit: 5,
-              callback: (value) => formatValue(value as number),
-              color: darkMode ? textColor.dark : textColor.light,
-            },
-            grid: {
-              color: darkMode ? gridColor.dark : gridColor.light,
-            },
-          },
-          x: {
-            type: "time",
-            time: {
-              parser: "hh:mm:ss",
-              unit: "second",
-              tooltipFormat: "MMM DD, H:mm:ss a",
-              displayFormats: {
-                second: "H:mm:ss",
-              },
-            },
-            border: {
-              display: false,
-            },
-            grid: {
-              display: false,
-            },
-            ticks: {
-              autoSkipPadding: 48,
-              maxRotation: 0,
-              color: darkMode ? textColor.dark : textColor.light,
-            },
-          },
-        },
-        plugins: {
-          legend: {
-            display: false,
-          },
-          tooltip: {
-            titleFont: {
-              weight: "bold",
-            },
-            callbacks: {
-              label: (context) => formatValue(context.parsed.y),
-            },
-            titleColor: darkMode
-              ? tooltipTitleColor.dark
-              : tooltipTitleColor.light,
-            bodyColor: darkMode
-              ? tooltipBodyColor.dark
-              : tooltipBodyColor.light,
-            backgroundColor: darkMode
-              ? tooltipBgColor.dark
-              : tooltipBgColor.light,
-            borderColor: darkMode
-              ? tooltipBorderColor.dark
-              : tooltipBorderColor.light,
-          },
-        },
-        interaction: {
-          intersect: false,
-          mode: "nearest",
-        },
-        animation: false,
-        maintainAspectRatio: false,
-        resizeDelay: 200,
-      },
+      options: getChartOptions(
+        darkMode,
+        textColor,
+        gridColor,
+        tooltipTitleColor,
+        tooltipBodyColor,
+        tooltipBgColor,
+        tooltipBorderColor
+      ),
     });
     setChart(newChart);
     return () => newChart.destroy();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update header values
   useEffect(() => {
     if (!chart) return;
-    const currentValue =
-      data.datasets[0].data[data.datasets[0].data.length - 1];
-    const previousValue =
-      data.datasets[0].data[data.datasets[0].data.length - 2];
+    const currentValue = data.datasets[0].data[
+      data.datasets[0].data.length - 1
+    ] as number;
+    const previousValue = data.datasets[0].data[
+      data.datasets[0].data.length - 2
+    ] as number;
+
     if (chartValue.current) {
-      chartValue.current.innerHTML = currentValue as unknown as string;
+      chartValue.current.innerHTML = currentValue.toString();
     }
+
     if (chartDeviation.current) {
       const diff =
-        (((currentValue as number) - (previousValue as number)) /
-          (previousValue as number)) *
-        100;
+        ((currentValue - previousValue) / previousValue) *
+        PERCENTAGE_MULTIPLIER;
       chartDeviation.current.innerHTML = `${diff > 0 ? "+" : ""}${diff.toFixed(
         2
       )}%`;
+
       if (diff < 0) {
         chartDeviation.current.style.backgroundColor = adjustColorOpacity(
           getCssVariable("--color-red-500"),
-          0.2
+          DEVIATION_BACKGROUND_OPACITY
         );
         chartDeviation.current.style.color = getCssVariable("--color-red-700");
       } else {
         chartDeviation.current.style.backgroundColor = adjustColorOpacity(
           getCssVariable("--color-green-500"),
-          0.2
+          DEVIATION_BACKGROUND_OPACITY
         );
         chartDeviation.current.style.color =
           getCssVariable("--color-green-700");
       }
     }
     chart.update("none");
-  }, [data]);
+  }, [data, chart]);
 
   useEffect(() => {
     if (!chart) return;
@@ -196,7 +219,17 @@ function RealtimeChart({ data, width, height }: RealtimeChartProps) {
       chart.options.plugins!.tooltip!.borderColor = tooltipBorderColor.light;
     }
     chart.update("none");
-  }, [currentTheme]);
+  }, [
+    currentTheme,
+    chart,
+    textColor,
+    gridColor,
+    tooltipTitleColor,
+    tooltipBodyColor,
+    tooltipBgColor,
+    tooltipBorderColor,
+    darkMode,
+  ]);
 
   return (
     <React.Fragment>
@@ -216,6 +249,6 @@ function RealtimeChart({ data, width, height }: RealtimeChartProps) {
       </div>
     </React.Fragment>
   );
-}
+};
 
 export default RealtimeChart;

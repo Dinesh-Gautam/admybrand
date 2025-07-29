@@ -10,3 +10,13 @@ export { default as CalendarIcon } from "./CalendarIcon";
 export { default as CampaignsIcon } from "./CampaignsIcon";
 export { default as SettingsIcon } from "./SettingsIcon";
 export { default as UtilityIcon } from "./UtilityIcon";
+export { default as HamburgerIcon } from "./HamburgerIcon";
+export { default as SearchIcon } from "./SearchIcon";
+export { default as CloseIcon } from "./CloseIcon";
+export { default as Logo } from "./Logo";
+export { default as ExpandCollapseIcon } from "./ExpandCollapseIcon";
+export { default as InfoIcon } from "./InfoIcon";
+
+export { default as ArrowRightIcon } from "./ArrowRightIcon";
+export { default as TrashIcon } from "./TrashIcon";
+export { default as UsersIcon } from "./UsersIcon";

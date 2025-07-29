@@ -1,44 +1,9 @@
 import React from "react";
 import Tooltip from "../Tooltip";
 import BarChart from "@/components/charts/BarChart02";
-
-// Import utilities
-import { getCssVariable } from "../../utils/Utils";
+import { salesVsRefundsChartData } from "@/constants/dashboard";
 
 function DashboardCard09() {
-  const chartData = {
-    labels: [
-      "12-01-2022",
-      "01-01-2023",
-      "02-01-2023",
-      "03-01-2023",
-      "04-01-2023",
-      "05-01-2023",
-    ],
-    datasets: [
-      // Light blue bars
-      {
-        label: "Stack 1",
-        data: [6200, 9200, 6600, 8800, 5200, 9200],
-        backgroundColor: getCssVariable("--color-violet-500"),
-        hoverBackgroundColor: getCssVariable("--color-violet-600"),
-        barPercentage: 0.7,
-        categoryPercentage: 0.7,
-        borderRadius: 4,
-      },
-      // Blue bars
-      {
-        label: "Stack 2",
-        data: [-4000, -2600, -5350, -4000, -7500, -2000],
-        backgroundColor: getCssVariable("--color-violet-200"),
-        hoverBackgroundColor: getCssVariable("--color-violet-300"),
-        barPercentage: 0.7,
-        categoryPercentage: 0.7,
-        borderRadius: 4,
-      },
-    ],
-  };
-
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
@@ -62,10 +27,12 @@ function DashboardCard09() {
           </div>
         </div>
       </div>
-      {/* Chart built with Chart.js 3 */}
       <div className="grow">
-        {/* Change the height attribute to adjust the chart height */}
-        <BarChart data={chartData as any} width={595} height={248} />
+        <BarChart
+          data={salesVsRefundsChartData as any}
+          width={595}
+          height={248}
+        />
       </div>
     </div>
   );

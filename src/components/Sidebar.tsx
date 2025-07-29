@@ -6,6 +6,9 @@ import SidebarLinkGroup from "./SidebarLinkGroup";
 import { MENU_ITEMS } from "@/constants/menu";
 import SidebarLink from "./SidebarLink";
 import { ChevronDown } from "lucide-react";
+import CloseIcon from "./icons/CloseIcon";
+import Logo from "./icons/Logo";
+import ExpandCollapseIcon from "./icons/ExpandCollapseIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -13,11 +16,11 @@ interface SidebarProps {
   variant?: "default" | "v2";
 }
 
-function Sidebar({
+const Sidebar = ({
   sidebarOpen,
   setSidebarOpen,
   variant = "default",
-}: SidebarProps) {
+}: SidebarProps) => {
   const pathname = usePathname();
   const trigger = useRef<HTMLButtonElement>(null);
   const sidebar = useRef<HTMLDivElement>(null);
@@ -30,6 +33,7 @@ function Sidebar({
     return false;
   });
 
+  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!sidebar.current || !trigger.current) return;
@@ -45,6 +49,7 @@ function Sidebar({
     return () => document.removeEventListener("click", clickHandler);
   }, [sidebarOpen]);
 
+  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!sidebarOpen || keyCode !== 27) return;
@@ -63,9 +68,98 @@ function Sidebar({
     }
   }, [sidebarExpanded]);
 
+  const handleSubmenuClick = (handleClick: () => void) => {
+    handleClick();
+    setSidebarExpanded(true);
+  };
+
+  const renderSubmenu = (item: any, handleClick: () => void, open: boolean) => (
+    <React.Fragment>
+      <button
+        className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
+          pathname.includes(item.path)
+            ? ""
+            : "hover:text-gray-900 dark:hover:text-white"
+        }`}
+        onClick={(e) => {
+          e.preventDefault();
+          handleSubmenuClick(handleClick);
+        }}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <item.icon
+              className={`shrink-0 fill-current ${
+                pathname.includes(item.path)
+                  ? "text-violet-500"
+                  : "text-gray-400 dark:text-gray-500"
+              }`}
+            />
+            <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+              {item.label}
+            </span>
+          </div>
+          <div
+            className={`flex shrink-0 ml-2 items-center mt-1 transition-all ${
+              open && "rotate-180"
+            }`}
+          >
+            <ChevronDown size={16} />
+          </div>
+        </div>
+      </button>
+      <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
+        <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
+          {item.submenu.map((subItem: any) => (
+            <li key={subItem.label} className="mb-1 last:mb-0">
+              <SidebarLink href={subItem.path}>
+                <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                  {subItem.label}
+                </span>
+              </SidebarLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </React.Fragment>
+  );
+
+  const renderMenuItem = (item: any) => (
+    <li
+      key={item.label}
+      className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r ${
+        pathname.includes(item.path) &&
+        "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
+      }`}
+    >
+      <SidebarLink href={item.path}>
+        <div className="flex items-center justify-between">
+          <div className="grow flex items-center">
+            <item.icon
+              className={`shrink-0 fill-current ${
+                pathname.includes(item.path)
+                  ? "text-violet-500"
+                  : "text-gray-400 dark:text-gray-500"
+              }`}
+            />
+            <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+              {item.label}
+            </span>
+          </div>
+          {item.badge && (
+            <div className="flex shrink-0 ml-2">
+              <span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-violet-400 px-2 rounded-full">
+                {item.badge}
+              </span>
+            </div>
+          )}
+        </div>
+      </SidebarLink>
+    </li>
+  );
+
   return (
     <div className="min-w-fit">
-      {/* Sidebar backdrop (mobile only) */}
       <div
         className={`fixed inset-0 bg-gray-900/30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
           sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -73,7 +167,6 @@ function Sidebar({
         aria-hidden="true"
       ></div>
 
-      {/* Sidebar */}
       <div
         id="sidebar"
         ref={sidebar}
@@ -85,9 +178,7 @@ function Sidebar({
             : "rounded-r-2xl shadow-xs"
         }`}
       >
-        {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
-          {/* Close button */}
           <button
             ref={trigger}
             className="lg:hidden text-gray-500 hover:text-gray-400"
@@ -96,30 +187,14 @@ function Sidebar({
             aria-expanded={sidebarOpen}
           >
             <span className="sr-only">Close sidebar</span>
-            <svg
-              className="w-6 h-6 fill-current"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M10.7 18.7l1.4-1.4L7.8 13H20v-2H7.8l4.3-4.3-1.4-1.4L4 12z" />
-            </svg>
+            <CloseIcon />
           </button>
-          {/* Logo */}
           <Link href="/" className="block">
-            <svg
-              className="fill-violet-500"
-              xmlns="http://www.w3.org/2000/svg"
-              width={32}
-              height={32}
-            >
-              <path d="M31.956 14.8C31.372 6.92 25.08.628 17.2.044V5.76a9.04 9.04 0 0 0 9.04 9.04h5.716ZM14.8 26.24v5.716C6.92 31.372.63 25.08.044 17.2H5.76a9.04 9.04 0 0 1 9.04 9.04Zm11.44-9.04h5.716c-.584 7.88-6.876 14.172-14.756 14.756V26.24a9.04 9.04 0 0 1 9.04-9.04ZM.044 14.8C.63 6.92 6.92.628 14.8.044V5.76a9.04 9.04 0 0 1-9.04 9.04H.044Z" />
-            </svg>
+            <Logo />
           </Link>
         </div>
 
-        {/* Links */}
         <div className="space-y-8">
-          {/* Pages group */}
           <div>
             <h3 className="text-xs uppercase text-gray-400 dark:text-gray-500 font-semibold pl-3">
               <span
@@ -139,102 +214,18 @@ function Sidebar({
                     key={item.label}
                     activecondition={pathname.includes(item.path)}
                   >
-                    {(handleClick, open) => (
-                      <React.Fragment>
-                        <button
-                          className={`block text-gray-800 dark:text-gray-100 truncate transition duration-150 ${
-                            pathname.includes(item.path)
-                              ? ""
-                              : "hover:text-gray-900 dark:hover:text-white"
-                          }`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleClick();
-                            setSidebarExpanded(true);
-                          }}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                              <item.icon
-                                className={`shrink-0 fill-current ${
-                                  pathname.includes(item.path)
-                                    ? "text-violet-500"
-                                    : "text-gray-400 dark:text-gray-500"
-                                }`}
-                              />
-                              <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                {item.label}
-                              </span>
-                            </div>
-                            {/* Icon */}
-                            <div
-                              className={`flex shrink-0 ml-2 items-center mt-1 transition-all ${
-                                open && "rotate-180"
-                              }`}
-                            >
-                              <ChevronDown size={16} />
-                            </div>
-                          </div>
-                        </button>
-                        <div className="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                          <ul className={`pl-8 mt-1 ${!open && "hidden"}`}>
-                            {item.submenu.map((subItem) => (
-                              <li
-                                key={subItem.label}
-                                className="mb-1 last:mb-0"
-                              >
-                                <SidebarLink href={subItem.path}>
-                                  <span className="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    {subItem.label}
-                                  </span>
-                                </SidebarLink>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </React.Fragment>
-                    )}
+                    {(handleClick, open) =>
+                      renderSubmenu(item, handleClick, open)
+                    }
                   </SidebarLinkGroup>
                 ) : (
-                  <li
-                    key={item.label}
-                    className={`pl-4 pr-3 py-2 rounded-lg mb-0.5 last:mb-0 bg-linear-to-r ${
-                      pathname.includes(item.path) &&
-                      "from-violet-500/[0.12] dark:from-violet-500/[0.24] to-violet-500/[0.04]"
-                    }`}
-                  >
-                    <SidebarLink href={item.path}>
-                      <div className="flex items-center justify-between">
-                        <div className="grow flex items-center">
-                          <item.icon
-                            className={`shrink-0 fill-current ${
-                              pathname.includes(item.path)
-                                ? "text-violet-500"
-                                : "text-gray-400 dark:text-gray-500"
-                            }`}
-                          />
-                          <span className="text-sm font-medium ml-4 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                            {item.label}
-                          </span>
-                        </div>
-                        {/* Badge */}
-                        {item.badge && (
-                          <div className="flex shrink-0 ml-2">
-                            <span className="inline-flex items-center justify-center h-5 text-xs font-medium text-white bg-violet-400 px-2 rounded-full">
-                              {item.badge}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    </SidebarLink>
-                  </li>
+                  renderMenuItem(item)
                 )
               )}
             </ul>
           </div>
         </div>
 
-        {/* Expand / collapse button */}
         <div className="pt-3 hidden lg:inline-flex 2xl:hidden justify-end mt-auto">
           <div className="w-12 pl-4 pr-3 py-2">
             <button
@@ -242,21 +233,13 @@ function Sidebar({
               onClick={() => setSidebarExpanded(!sidebarExpanded)}
             >
               <span className="sr-only">Expand / collapse sidebar</span>
-              <svg
-                className="shrink-0 fill-current text-gray-400 dark:text-gray-500 sidebar-expanded:rotate-180"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-              >
-                <path d="M15 16a1 1 0 0 1-1-1V1a1 1 0 1 1 2 0v14a1 1 0 0 1-1 1ZM8.586 7H1a1 1 0 1 0 0 2h7.586l-2.793 2.793a1 1 0 1 0 1.414 1.414l4.5-4.5A.997.997 0 0 0 12 8.01M11.924 7.617a.997.997 0 0 0-.217-.324l-4.5-4.5a1 1 0 0 0-1.414 1.414L8.586 7M12 7.99a.996.996 0 0 0-.076-.373Z" />
-              </svg>
+              <ExpandCollapseIcon />
             </button>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;
