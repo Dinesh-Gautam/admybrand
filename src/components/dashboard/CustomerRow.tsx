@@ -1,6 +1,7 @@
 import React from "react";
 import { StaticImageData } from "next/image";
 import AiPersonaBadge from "./AiPersonaBadge";
+import { motion } from "motion/react";
 
 interface CustomerRowProps {
   image: StaticImageData;
@@ -20,7 +21,7 @@ const CustomerRow = ({
   persona,
 }: CustomerRowProps) => {
   return (
-    <tr>
+    <motion.tr layout>
       <td className="p-2 whitespace-nowrap">
         <div className="flex items-center">
           <div className="w-10 h-10 shrink-0 mr-2 sm:mr-3">
@@ -49,7 +50,7 @@ const CustomerRow = ({
       <td className="p-2 whitespace-nowrap">
         <AiPersonaBadge persona={persona} />
       </td>
-    </tr>
+    </motion.tr>
   );
 };
 

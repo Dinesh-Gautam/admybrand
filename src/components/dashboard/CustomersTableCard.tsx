@@ -6,6 +6,7 @@ import { useSorting } from "@/hooks/useSorting";
 import { usePagination } from "@/hooks/usePagination";
 import AiPersonaFilter from "./AiPersonaFilter";
 import AiIcon from "@/components/icons/AiIcon";
+import { motion, AnimatePresence } from "motion/react";
 
 function CustomersTableCard() {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
@@ -128,19 +129,24 @@ function CustomersTableCard() {
                 </th>
               </tr>
             </thead>
-            <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
-              {paginatedData.map((customer) => (
-                <CustomerRow
-                  key={customer.id}
-                  image={customer.image}
-                  name={customer.name}
-                  email={customer.email}
-                  location={customer.location}
-                  spent={customer.spent}
-                  persona={customer.persona}
-                />
-              ))}
-            </tbody>
+            <motion.tbody
+              layout
+              className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"
+            >
+              <AnimatePresence>
+                {paginatedData.map((customer) => (
+                  <CustomerRow
+                    key={customer.id}
+                    image={customer.image}
+                    name={customer.name}
+                    email={customer.email}
+                    location={customer.location}
+                    spent={customer.spent}
+                    persona={customer.persona}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.tbody>
           </table>
         </div>
         <div className="flex justify-between items-center mt-4">

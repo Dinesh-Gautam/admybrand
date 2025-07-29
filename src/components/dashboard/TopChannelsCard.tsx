@@ -4,6 +4,7 @@ import ChannelRow from "./ChannelRow";
 import { topChannelsData } from "./TopChannelsData";
 import { useSorting } from "@/hooks/useSorting";
 import { usePagination } from "@/hooks/usePagination";
+import { motion, AnimatePresence } from "motion/react";
 
 function TopChannelsCard() {
   const { sortedData, requestSort, getSortDirection } =
@@ -110,19 +111,24 @@ function TopChannelsCard() {
                 </th>
               </tr>
             </thead>
-            <tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
-              {paginatedData.map((channel, index) => (
-                <ChannelRow
-                  key={index}
-                  icon={channel.icon}
-                  source={channel.source}
-                  visitors={channel.visitors}
-                  revenues={channel.revenues}
-                  sales={channel.sales}
-                  conversion={channel.conversion}
-                />
-              ))}
-            </tbody>
+            <motion.tbody
+              layout
+              className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60"
+            >
+              <AnimatePresence>
+                {paginatedData.map((channel, index) => (
+                  <ChannelRow
+                    key={channel.source}
+                    icon={channel.icon}
+                    source={channel.source}
+                    visitors={channel.visitors}
+                    revenues={channel.revenues}
+                    sales={channel.sales}
+                    conversion={channel.conversion}
+                  />
+                ))}
+              </AnimatePresence>
+            </motion.tbody>
           </table>
         </div>
         <div className="flex justify-between items-center mt-4">

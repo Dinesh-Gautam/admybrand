@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { motion } from "motion/react";
 
 interface ChannelRowProps {
   icon: ReactNode;
@@ -18,7 +19,7 @@ const ChannelRow = ({
   conversion,
 }: ChannelRowProps) => {
   return (
-    <tr>
+    <motion.tr layout>
       <td className="p-2">
         <div className="flex items-center">
           {icon}
@@ -37,7 +38,7 @@ const ChannelRow = ({
       <td className="p-2">
         <div className="text-center text-sky-500">{conversion}</div>
       </td>
-    </tr>
+    </motion.tr>
   );
 };
 
