@@ -8,7 +8,7 @@ import useRealtimeChart from "@/hooks/useRealtimeChart";
 // Import utilities
 import { adjustColorOpacity, getCssVariable } from "@/utils/chart";
 
-function DashboardCard05() {
+function RealtimeValueCard() {
   const { slicedData, slicedLabels } = useRealtimeChart(realTimeChartData);
 
   const chartData = {
@@ -79,4 +79,4 @@ function DashboardCard05() {
   );
 }
 
-export default DashboardCard05;
+export default RealtimeValueCard;

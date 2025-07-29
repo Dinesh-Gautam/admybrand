@@ -93,26 +93,6 @@ function LineChart01({ data, width, height }: LineChart01Props) {
         maintainAspectRatio: false,
         resizeDelay: 200,
       },
-      plugins: [
-        {
-          id: "chartArea",
-          beforeDraw(chart, args, options) {
-            const ctx = chart.ctx;
-            const area = chart.chartArea;
-            ctx.save();
-            ctx.fillStyle = darkMode
-              ? "rgba(42, 53, 72, 0.5)"
-              : "rgba(249, 250, 251, 1)";
-            ctx.fillRect(
-              area.left,
-              area.top,
-              area.right - area.left,
-              area.bottom - area.top
-            );
-            ctx.restore();
-          },
-        },
-      ],
     });
     setChart(newChart);
     return () => newChart.destroy();

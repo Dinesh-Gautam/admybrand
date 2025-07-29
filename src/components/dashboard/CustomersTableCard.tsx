@@ -2,7 +2,7 @@ import React from "react";
 import CustomerRow from "./CustomerRow";
 import { customersData } from "./CustomersData";
 
-function DashboardCard10() {
+function CustomersTableCard() {
   return (
     <div className="col-span-full xl:col-span-6 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
@@ -48,4 +48,4 @@ function DashboardCard10() {
   );
 }
 
-export default DashboardCard10;
+export default CustomersTableCard;

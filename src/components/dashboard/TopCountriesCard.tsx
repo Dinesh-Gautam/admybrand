@@ -2,7 +2,7 @@ import React from "react";
 import DoughnutChart from "@/components/charts/DoughnutChart";
 import { topCountriesChartData } from "@/constants/dashboard";
 
-function DashboardCard06() {
+function TopCountriesCard() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
@@ -19,4 +19,4 @@ function DashboardCard06() {
   );
 }
 
-export default DashboardCard06;
+export default TopCountriesCard;

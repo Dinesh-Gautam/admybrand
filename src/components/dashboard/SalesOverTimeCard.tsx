@@ -2,7 +2,7 @@ import React from "react";
 import LineChart from "@/components/charts/LineChart02";
 import { salesOverTimeChartData } from "@/constants/dashboard";
 
-function DashboardCard08() {
+function SalesOverTimeCard() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex items-center">
@@ -19,4 +19,4 @@ function DashboardCard08() {
   );
 }
 
-export default DashboardCard08;
+export default SalesOverTimeCard;

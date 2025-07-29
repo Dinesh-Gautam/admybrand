@@ -2,7 +2,7 @@ import React from "react";
 import ChannelRow from "./ChannelRow";
 import { topChannelsData } from "./TopChannelsData";
 
-function DashboardCard07() {
+function TopChannelsCard() {
   return (
     <div className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
@@ -52,4 +52,4 @@ function DashboardCard07() {
   );
 }
 
-export default DashboardCard07;
+export default TopChannelsCard;

@@ -1,34 +1,34 @@
-import DashboardCard01 from "@/components/dashboard/DashboardCard01";
-import DashboardCard02 from "@/components/dashboard/DashboardCard02";
-import DashboardCard03 from "@/components/dashboard/DashboardCard03";
-import DashboardCard04 from "@/components/dashboard/DashboardCard04";
-import DashboardCard05 from "@/components/dashboard/DashboardCard05";
-import DashboardCard06 from "@/components/dashboard/DashboardCard06";
-import DashboardCard07 from "@/components/dashboard/DashboardCard07";
-import DashboardCard08 from "@/components/dashboard/DashboardCard08";
-import DashboardCard09 from "@/components/dashboard/DashboardCard09";
-import DashboardCard10 from "@/components/dashboard/DashboardCard10";
-import DashboardCard11 from "@/components/dashboard/DashboardCard11";
-import DashboardCard12 from "@/components/dashboard/DashboardCard12";
-import DashboardCard13 from "@/components/dashboard/DashboardCard13";
+import AcmePlusSalesCard from "@/components/dashboard/AcmePlusSalesCard";
+import AcmeAdvancedSalesCard from "@/components/dashboard/AcmeAdvancedSalesCard";
+import AcmeProfessionalSalesCard from "@/components/dashboard/AcmeProfessionalSalesCard";
+import DirectVsIndirectCard from "@/components/dashboard/DirectVsIndirectCard";
+import RealtimeValueCard from "@/components/dashboard/RealtimeValueCard";
+import TopCountriesCard from "@/components/dashboard/TopCountriesCard";
+import TopChannelsCard from "@/components/dashboard/TopChannelsCard";
+import SalesOverTimeCard from "@/components/dashboard/SalesOverTimeCard";
+import SalesVsRefundsCard from "@/components/dashboard/SalesVsRefundsCard";
+import CustomersTableCard from "@/components/dashboard/CustomersTableCard";
+import RefundReasonsCard from "@/components/dashboard/RefundReasonsCard";
+import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
+import IncomeExpensesCard from "@/components/dashboard/IncomeExpensesCard";
 import React from "react";
 
 const DashboardCardGrid = () => {
   return (
     <div className="grid grid-cols-12 gap-6">
-      <DashboardCard01 />
-      <DashboardCard02 />
-      <DashboardCard03 />
-      <DashboardCard04 />
-      <DashboardCard05 />
-      <DashboardCard06 />
-      <DashboardCard07 />
-      <DashboardCard08 />
-      <DashboardCard09 />
-      <DashboardCard10 />
-      <DashboardCard11 />
-      <DashboardCard12 />
-      <DashboardCard13 />
+      <AcmePlusSalesCard />
+      <AcmeAdvancedSalesCard />
+      <AcmeProfessionalSalesCard />
+      <DirectVsIndirectCard />
+      <RealtimeValueCard />
+      <TopCountriesCard />
+      <TopChannelsCard />
+      <SalesOverTimeCard />
+      <SalesVsRefundsCard />
+      <CustomersTableCard />
+      <RefundReasonsCard />
+      <RecentActivityCard />
+      <IncomeExpensesCard />
     </div>
   );
 };

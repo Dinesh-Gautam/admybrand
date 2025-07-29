@@ -1,7 +1,7 @@
 import BarChart from "@/components/charts/BarChart01";
 import { directVsIndirectChartData } from "@/constants/dashboard";
 
-function DashboardCard04() {
+function DirectVsIndirectCard() {
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
@@ -18,4 +18,4 @@ function DashboardCard04() {
   );
 }
 
-export default DashboardCard04;
+export default DirectVsIndirectCard;

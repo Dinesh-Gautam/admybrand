@@ -3,7 +3,7 @@ import LineChart from "@/components/charts/LineChart01";
 import { acmePlusChartData } from "@/constants/dashboard";
 import DashboardCard from "./DashboardCard";
 
-function DashboardCard01() {
+function AcmePlusSalesCard() {
   return (
     <DashboardCard
       title="Acme Plus"
@@ -16,4 +16,4 @@ function DashboardCard01() {
   );
 }
 
-export default DashboardCard01;
+export default AcmePlusSalesCard;
