@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useThemeProvider } from "@/utils/theme-provider";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 import { chartColors } from "./ChartjsConfig";
 import {
@@ -123,8 +124,8 @@ const getChartOptions = (
 
 const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
   const [chart, setChart] = useState<Chart | null>(null);
+  const [value, setValue] = useState(57.81);
   const canvas = useRef<HTMLCanvasElement>(null);
-  const chartValue = useRef<HTMLSpanElement>(null);
   const chartDeviation = useRef<HTMLDivElement>(null);
   const { currentTheme } = useThemeProvider();
   const darkMode = currentTheme === "dark";
@@ -156,6 +157,7 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
     });
     setChart(newChart);
     return () => newChart.destroy();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -167,8 +169,8 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
       data.datasets[0].data.length - 2
     ] as number;
 
-    if (chartValue.current) {
-      chartValue.current.innerHTML = currentValue.toString();
+    if (currentValue) {
+      setValue(currentValue);
     }
 
     if (chartDeviation.current) {
@@ -194,6 +196,8 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
           getCssVariable("--color-green-700");
       }
     }
+
+    chart.data = data;
     chart.update("none");
   }, [data, chart]);
 
@@ -235,7 +239,7 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
       <div className="px-5 py-3">
         <div className="flex items-start">
           <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
-            $<span ref={chartValue}>57.81</span>
+            $<NumberTicker value={value} decimalPlaces={2} />
           </div>
           <div
             ref={chartDeviation}

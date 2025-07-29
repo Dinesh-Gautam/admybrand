@@ -73,6 +73,24 @@ export const acmePlusChartData = {
         532, 532, 532, 404, 404, 314, 314, 314, 314, 314, 234, 314, 234, 234,
         314, 314, 314, 388, 314, 202, 202, 202, 202, 314, 720, 642,
       ],
+      fill: true,
+      backgroundColor: function (context: any) {
+        const chart = context.chart;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) {
+          return null;
+        }
+        return chartAreaGradient(ctx, chartArea, [
+          {
+            stop: 0,
+            color: adjustColorOpacity(getCssVariable("--color-gray-500"), 0),
+          },
+          {
+            stop: 1,
+            color: adjustColorOpacity(getCssVariable("--color-gray-500"), 0.2),
+          },
+        ]);
+      },
       borderColor: adjustColorOpacity(getCssVariable("--color-gray-500"), 0.25),
       borderWidth: 2,
       pointRadius: 0,
@@ -165,6 +183,24 @@ export const acmeAdvancedChartData = {
         732, 610, 610, 504, 504, 504, 349, 349, 504, 342, 504, 610, 391, 192,
         154, 273, 191, 191, 126, 263, 349, 252, 423, 622, 470, 532,
       ],
+      fill: true,
+      backgroundColor: function (context: any) {
+        const chart = context.chart;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) {
+          return null;
+        }
+        return chartAreaGradient(ctx, chartArea, [
+          {
+            stop: 0,
+            color: adjustColorOpacity(getCssVariable("--color-gray-500"), 0),
+          },
+          {
+            stop: 1,
+            color: adjustColorOpacity(getCssVariable("--color-gray-500"), 0.2),
+          },
+        ]);
+      },
       borderColor: adjustColorOpacity(getCssVariable("--color-gray-500"), 0.25),
       borderWidth: 2,
       pointRadius: 0,
@@ -257,6 +293,24 @@ export const acmeProfessionalChartData = {
         689, 562, 477, 477, 477, 477, 458, 314, 430, 378, 430, 498, 642, 350,
         145, 145, 354, 260, 188, 188, 300, 300, 282, 364, 660, 554,
       ],
+      fill: true,
+      backgroundColor: function (context: any) {
+        const chart = context.chart;
+        const { ctx, chartArea } = chart;
+        if (!chartArea) {
+          return null;
+        }
+        return chartAreaGradient(ctx, chartArea, [
+          {
+            stop: 0,
+            color: adjustColorOpacity(getCssVariable("--color-gray-500"), 0),
+          },
+          {
+            stop: 1,
+            color: adjustColorOpacity(getCssVariable("--color-gray-500"), 0.2),
+          },
+        ]);
+      },
       borderColor: adjustColorOpacity(getCssVariable("--color-gray-500"), 0.25),
       borderWidth: 2,
       pointRadius: 0,
