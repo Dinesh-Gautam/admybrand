@@ -145,9 +145,6 @@ const Notification = ({
       >
         <X className="h-4 w-4" />
       </button>
-      <div className="absolute right-2 bottom-2">
-        <AiIcon className="h-5 w-5 mt-0.5" />
-      </div>
     </figure>
   );
 };
@@ -176,7 +173,10 @@ export function SmartAlertsFeed({
       )}
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-bold">Smart Alerts</h2>
+        <h2 className="text-lg font-bold flex gap-2 items-center">
+          <AiIcon className="h-5 w-5 mt-0.5" />
+          Smart Alerts
+        </h2>
         {onClose && (
           <button
             onClick={onClose}
