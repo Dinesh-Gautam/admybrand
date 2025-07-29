@@ -4,7 +4,7 @@ import { topChannelsData } from "./TopChannelsData";
 
 function DashboardCard07() {
   return (
-    <div className="col-span-full xl:col-span-8 bg-white dark:bg-gray-800 shadow-xs rounded-xl">
+    <div className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           Top Channels
@@ -13,7 +13,7 @@ function DashboardCard07() {
       <div className="p-3">
         <div className="overflow-x-auto">
           <table className="table-auto w-full dark:text-gray-300">
-            <thead className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs">
+            <thead className="text-xs uppercase header">
               <tr>
                 <th className="p-2">
                   <div className="font-semibold text-left">Source</div>

@@ -32,10 +32,9 @@ const Header = ({
 
   const getHeaderClassName = () => {
     const baseClasses =
-      "sticky top-0 before:absolute before:inset-0 before:backdrop-blur-md max-lg:before:bg-white/90 dark:max-lg:before:bg-gray-800/90 before:-z-10 z-30";
+      "sticky top-0 before:absolute before:inset-0 before:-z-10 z-30 backdrop-blur-xl border-b-1 border-gray-600/20 !bg-transparent";
     const variantClasses = {
-      default:
-        "max-lg:shadow-xs lg:before:bg-gray-100/90 dark:lg:before:bg-gray-900/90",
+      default: "max-lg:shadow-xs",
       v2: "before:bg-white after:absolute after:h-px after:inset-x-0 after:top-full after:bg-gray-200 dark:after:bg-gray-700/60 after:-z-10 dark:before:bg-gray-800",
       v3: "before:bg-white after:absolute after:h-px after:inset-x-0 after:top-full after:bg-gray-200 dark:after:bg-gray-700/60 after:-z-10 dark:before:bg-gray-900",
     };
@@ -45,7 +44,7 @@ const Header = ({
   const getContainerClassName = () => {
     const baseClasses = "flex items-center justify-between h-16";
     const variantClasses = {
-      default: "lg:border-b border-gray-200 dark:border-gray-700/60",
+      default: "",
       v2: "",
       v3: "",
     };
@@ -53,8 +52,8 @@ const Header = ({
   };
 
   return (
-    <header className={getHeaderClassName()}>
-      <div className="px-4 sm:px-6 lg:px-8">
+    <header className={`${getHeaderClassName()} `}>
+      <div className="px-4 sm:px-6 lg:px-8 ">
         <div className={getContainerClassName()}>
           <div className="flex">
             <button

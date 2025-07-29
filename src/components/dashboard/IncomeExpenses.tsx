@@ -8,7 +8,7 @@ export default function IncomeExpenses() {
   return (
     <div className="p-3">
       <div>
-        <header className="text-xs uppercase text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-700/50 rounded-xs font-semibold p-2">
+        <header className="text-xs uppercase font-semibold p-2 header">
           Today
         </header>
         <ul className="my-1">
