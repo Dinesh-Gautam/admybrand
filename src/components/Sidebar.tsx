@@ -9,17 +9,23 @@ import { ChevronDown } from "lucide-react";
 import CloseIcon from "./icons/CloseIcon";
 import Logo from "./icons/Logo";
 import ExpandCollapseIcon from "./icons/ExpandCollapseIcon";
+import { SmartAlertsFeed } from "./dashboard/SmartAlertsFeed";
+import AiIcon from "./icons/AiIcon";
 
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   variant?: "default" | "v2";
+  alertsOpen: boolean;
+  setAlertsOpen: (open: boolean) => void;
 }
 
 const Sidebar = ({
   sidebarOpen,
   setSidebarOpen,
   variant = "default",
+  alertsOpen,
+  setAlertsOpen,
 }: SidebarProps) => {
   const pathname = usePathname();
   const trigger = useRef<HTMLButtonElement>(null);
@@ -239,6 +245,21 @@ const Sidebar = ({
             </button>
           </div>
         </div>
+      </div>
+      {alertsOpen && (
+        <div
+          className="fixed inset-0 bg-gray-900/30 z-40 transition-opacity duration-200 lg:hidden"
+          onClick={() => setAlertsOpen(false)}
+        ></div>
+      )}
+      <div
+        className={`fixed top-0 right-0 h-full w-xl max-w-full backdrop-blur-xl shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+          alertsOpen
+            ? "translate-x-0 bg-white/60 dark:bg-gray-800/70"
+            : "translate-x-full bg-white/20 dark:bg-black/10"
+        }`}
+      >
+        <SmartAlertsFeed onClose={() => setAlertsOpen(false)} />
       </div>
     </div>
   );

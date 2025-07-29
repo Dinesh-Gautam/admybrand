@@ -6,17 +6,22 @@ import ThemeToggle from "@/components/ThemeToggle";
 import React, { useState } from "react";
 import HamburgerIcon from "./icons/HamburgerIcon";
 import SearchIcon from "./icons/SearchIcon";
+import AiIcon from "@/components/icons/AiIcon";
 
 interface HeaderProps {
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
   variant?: "default" | "v2" | "v3";
+  alertsOpen: boolean;
+  setAlertsOpen: (open: boolean) => void;
 }
 
 const Header = ({
   sidebarOpen,
   setSidebarOpen,
   variant = "default",
+  alertsOpen,
+  setAlertsOpen,
 }: HeaderProps) => {
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
@@ -68,18 +73,22 @@ const Header = ({
           </div>
 
           <div className="flex items-center space-x-3">
-            <div>
-              <ModalSearch
-                id="search-modal"
-                searchId="search"
-                modalOpen={searchModalOpen}
-                setModalOpen={setSearchModalOpen}
-              />
-            </div>
-            <DropdownNotifications align="right" />
+            <button
+              className="w-fit text-left hhover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800 px-4 py-1 pl-3 rounded-lg"
+              onClick={() => setAlertsOpen(!alertsOpen)}
+            >
+              <div className="flex items-center w-fit">
+                <AiIcon className="mt-0.5" />
+                <span className="text-sm font-medium ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                  Smart Alerts
+                </span>
+              </div>
+            </button>
+
+            {/* <DropdownNotifications align="right" /> */}
             <DropdownHelp align="right" />
             <ThemeToggle />
-            <hr className="w-px h-6 bg-gray-200 dark:bg-gray-700/60 border-none" />
+            <hr className="w-px h-6 bg-gray-200 dark:bg-gray-700 border-none" />
             <DropdownProfile align="right" />
           </div>
         </div>

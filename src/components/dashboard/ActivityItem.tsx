@@ -49,7 +49,7 @@ export default function ActivityItem({ activity }: { activity: Activity }) {
       <div
         className={`w-9 h-9 rounded-full shrink-0 my-2 mr-3 flex items-center justify-center ${bgColor}`}
       >
-        <Icon className="w-5 h-5 fill-current text-white" />
+        <Icon />
       </div>
       <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
         <div className="grow flex justify-between">
