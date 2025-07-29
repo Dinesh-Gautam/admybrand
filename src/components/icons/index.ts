@@ -1,0 +1,12 @@
+export { default as DashboardIcon } from "./DashboardIcon";
+export { default as ECommerceIcon } from "./ECommerceIcon";
+export { default as CommunityIcon } from "./CommunityIcon";
+export { default as FinanceIcon } from "./FinanceIcon";
+export { default as JobBoardIcon } from "./JobBoardIcon";
+export { default as TasksIcon } from "./TasksIcon";
+export { default as MessagesIcon } from "./MessagesIcon";
+export { default as InboxIcon } from "./InboxIcon";
+export { default as CalendarIcon } from "./CalendarIcon";
+export { default as CampaignsIcon } from "./CampaignsIcon";
+export { default as SettingsIcon } from "./SettingsIcon";
+export { default as UtilityIcon } from "./UtilityIcon";
