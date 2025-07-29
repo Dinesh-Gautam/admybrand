@@ -135,7 +135,7 @@ body::before {
   right: 0;
   bottom: 0;
   background-image: url('../images/mesh_bg_2.png');
-  background-size: 100% auto;
+  background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;

@@ -69,16 +69,6 @@ const Header = ({
 
           <div className="flex items-center space-x-3">
             <div>
-              <button
-                className={`w-8 h-8 flex items-center justify-center hover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800 rounded-full ml-3 ${
-                  searchModalOpen && "bg-gray-200 dark:bg-gray-800"
-                }`}
-                onClick={openSearchModal}
-                aria-controls="search-modal"
-              >
-                <span className="sr-only">Search</span>
-                <SearchIcon />
-              </button>
               <ModalSearch
                 id="search-modal"
                 searchId="search"

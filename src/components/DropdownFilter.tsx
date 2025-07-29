@@ -80,7 +80,7 @@ function DropdownFilter({ align }: DropdownFilterProps) {
         appear
         show={dropdownOpen}
         tag="div"
-        className={`origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 pt-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
+        className={`origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white/50 backdrop-blur-md dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/60 pt-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
           align === "right"
             ? "md:left-auto md:right-0"
             : "md:left-0 md:right-auto"
@@ -164,7 +164,7 @@ function DropdownFilter({ align }: DropdownFilterProps) {
               </label>
             </li>
           </ul>
-          <div className="py-2 px-3 border-t border-gray-200 dark:border-gray-700/60 bg-gray-50 dark:bg-gray-700/20">
+          <div className="py-2 px-3 border-t border-gray-200 dark:border-gray-700/60 bg-black/5 dark:bg-black/10">
             <ul className="flex items-center justify-between">
               <li>
                 <button
