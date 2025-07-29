@@ -3,10 +3,19 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import CustomerRow from "./CustomerRow";
 import { customersData } from "./CustomersData";
 import { useSorting } from "@/hooks/useSorting";
+import { usePagination } from "@/hooks/usePagination";
 
 function CustomersTableCard() {
   const { sortedData, requestSort, getSortDirection } =
     useSorting(customersData);
+  const {
+    paginatedData,
+    currentPage,
+    totalPages,
+    nextPage,
+    prevPage,
+    goToPage,
+  } = usePagination(sortedData, 5);
 
   const handleSort = (key: any) => {
     requestSort(key);
@@ -86,7 +95,7 @@ function CustomersTableCard() {
               </tr>
             </thead>
             <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
-              {sortedData.map((customer) => (
+              {paginatedData.map((customer) => (
                 <CustomerRow
                   key={customer.id}
                   image={customer.image}
@@ -98,6 +107,25 @@ function CustomersTableCard() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={prevPage}
+            disabled={currentPage === 1}
+            className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="text-xs font-semibold">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={nextPage}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>

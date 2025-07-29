@@ -3,10 +3,19 @@ import { ArrowDown, ArrowUp } from "lucide-react";
 import ChannelRow from "./ChannelRow";
 import { topChannelsData } from "./TopChannelsData";
 import { useSorting } from "@/hooks/useSorting";
+import { usePagination } from "@/hooks/usePagination";
 
 function TopChannelsCard() {
   const { sortedData, requestSort, getSortDirection } =
     useSorting(topChannelsData);
+  const {
+    paginatedData,
+    currentPage,
+    totalPages,
+    nextPage,
+    prevPage,
+    goToPage,
+  } = usePagination(sortedData, 5);
 
   const handleSort = (key: any) => {
     requestSort(key);
@@ -102,7 +111,7 @@ function TopChannelsCard() {
               </tr>
             </thead>
             <tbody className="text-sm font-medium divide-y divide-gray-100 dark:divide-gray-700/60">
-              {sortedData.map((channel, index) => (
+              {paginatedData.map((channel, index) => (
                 <ChannelRow
                   key={index}
                   icon={channel.icon}
@@ -115,6 +124,25 @@ function TopChannelsCard() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="flex justify-between items-center mt-4">
+          <button
+            onClick={prevPage}
+            disabled={currentPage === 1}
+            className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="text-xs font-semibold">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={nextPage}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
