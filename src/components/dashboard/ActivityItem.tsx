@@ -5,6 +5,7 @@ import {
   UsersIcon,
   ArrowBothwaysIcon,
 } from "@/components/icons";
+import { ChevronRight } from "lucide-react";
 
 export enum ActivityType {
   Mention,
@@ -70,10 +71,11 @@ export default function ActivityItem({ activity }: { activity: Activity }) {
           </div>
           <div className="shrink-0 self-end ml-2">
             <a
-              className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400"
+              className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400 flex items-center"
               href="#0"
             >
-              View<span className="hidden sm:inline"> {">"}</span>
+              View
+              <ChevronRight size="1rem" className="mt-0.5" />
             </a>
           </div>
         </div>

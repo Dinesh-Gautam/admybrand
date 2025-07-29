@@ -14,6 +14,7 @@
     "@types/react-transition-group": "^4.4.12",
     "chart.js": "^4.4.1",
     "chartjs-adapter-moment": "^1.0.1",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.532.0",
@@ -24,7 +25,7 @@
     "react-day-picker": "^9.4.1",
     "react-dom": "19.1.0",
     "react-transition-group": "^4.4.5",
-    "tailwind-merge": "^2.5.5"
+    "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -35,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.4.4",
     "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.6",
     "typescript": "^5"
   }
 }

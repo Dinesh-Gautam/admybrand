@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import EditMenu from "@/components/DropdownEditMenu";
+import { NumberTicker } from "@/components/ui/number-ticker";
 
 interface DashboardCardProps {
   title: string;
@@ -15,6 +16,8 @@ const DashboardCard = ({
   percent,
   chart,
 }: DashboardCardProps) => {
+  const SalesValue = Number(sales.replace(/[^0-9]/g, ""));
+
   return (
     <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 shadow-xs rounded-xl glassmorphism">
       <div className="px-5 pt-5">
@@ -54,7 +57,11 @@ const DashboardCard = ({
         </div>
         <div className="flex items-start">
           <div className="text-3xl font-bold text-gray-800 dark:text-gray-100 mr-2">
-            {sales}
+            $
+            <NumberTicker
+              startValue={Math.round(SalesValue / 1.2)}
+              value={SalesValue}
+            />
           </div>
           <div className="text-sm font-medium text-green-700 px-1.5 bg-green-500/20 rounded-full">
             {percent}

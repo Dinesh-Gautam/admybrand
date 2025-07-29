@@ -35,7 +35,7 @@ function CustomersTableCard() {
 
   return (
     <div className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
-      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex justify-between items-center">
+      <header className="px-5 py-2 border-b border-gray-100 dark:border-gray-700/60 flex justify-between items-center">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           Customers
         </h2>

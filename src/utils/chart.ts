@@ -14,6 +14,7 @@ export const formatThousands = (value: number): string =>
 
 export const getCssVariable = (variable: string): string => {
   if (typeof window === "undefined") return "";
+
   return getComputedStyle(document.documentElement)
     .getPropertyValue(variable)
     .trim();
