@@ -13,8 +13,13 @@ import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
 import IncomeExpensesCard from "@/components/dashboard/IncomeExpensesCard";
 import AiInsightSummaryCard from "@/components/dashboard/AiInsightSummaryCard";
 import React from "react";
+import { FilterState } from "@/components/DropdownFilter";
 
-const DashboardCardGrid = () => {
+interface DashboardCardGridProps {
+  filters: FilterState;
+}
+
+const DashboardCardGrid = ({ filters }: DashboardCardGridProps) => {
   return (
     <div className="grid grid-cols-12 gap-6">
       <AiInsightSummaryCard />
@@ -24,24 +29,24 @@ const DashboardCardGrid = () => {
       <ProfessionalSalesCard />
 
       {/* Real-time Data */}
-      <RealtimeValueCard />
+      {filters.RealTimeValue && <RealtimeValueCard />}
 
       {/* Sales Analysis */}
-      <SalesOverTimeCard />
-      <SalesVsRefundsCard />
-      <DirectVsIndirectCard />
+      {filters.SalesOverTime && <SalesOverTimeCard />}
+      {filters.SalesRefunds && <SalesVsRefundsCard />}
+      {filters.DirectorIndirect && <DirectVsIndirectCard />}
 
       {/* Acquisition */}
-      <TopChannelsCard />
-      <TopCountriesCard />
+      {filters.RefundReasons && <RefundReasonsCard />}
+      {filters.Topcahnnels && <TopChannelsCard />}
 
       {/* Customer Activity */}
-      <CustomersTableCard />
-      <RecentActivityCard />
+      {filters.Customers && <CustomersTableCard />}
+      {filters.TopCountries && <TopCountriesCard />}
+      {filters.RecentActivity && <RecentActivityCard />}
 
       {/* Financials */}
-      <IncomeExpensesCard />
-      <RefundReasonsCard />
+      {filters.IncomeExpenses && <IncomeExpensesCard />}
     </div>
   );
 };

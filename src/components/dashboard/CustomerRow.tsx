@@ -1,5 +1,6 @@
 import React from "react";
 import { StaticImageData } from "next/image";
+import AiPersonaBadge from "./AiPersonaBadge";
 
 interface CustomerRowProps {
   image: StaticImageData;
@@ -7,6 +8,7 @@ interface CustomerRowProps {
   email: string;
   location: string;
   spent: string;
+  persona: string;
 }
 
 const CustomerRow = ({
@@ -15,6 +17,7 @@ const CustomerRow = ({
   email,
   location,
   spent,
+  persona,
 }: CustomerRowProps) => {
   return (
     <tr>
@@ -42,6 +45,9 @@ const CustomerRow = ({
       </td>
       <td className="p-2 whitespace-nowrap">
         <div className="text-lg text-center">{location}</div>
+      </td>
+      <td className="p-2 whitespace-nowrap">
+        <AiPersonaBadge persona={persona} />
       </td>
     </tr>
   );

@@ -511,47 +511,34 @@ export const salesVsRefundsChartData = {
 };
 
 export const reasonForRefundsChartData = {
-  labels: ["Reasons"],
+  labels: [
+    "Difficulties",
+    "Missing features",
+    "Quality",
+    "Advertised",
+    "Other",
+  ],
   datasets: [
     {
-      label: "Having difficulties using the product",
-      data: [131],
-      backgroundColor: getCssVariable("--color-violet-500"),
-      hoverBackgroundColor: getCssVariable("--color-violet-600"),
-      barPercentage: 1,
-      categoryPercentage: 1,
-    },
-    {
-      label: "Missing features I need",
-      data: [100],
-      backgroundColor: getCssVariable("--color-violet-700"),
-      hoverBackgroundColor: getCssVariable("--color-violet-800"),
-      barPercentage: 1,
-      categoryPercentage: 1,
-    },
-    {
-      label: "Not satisfied about the quality of the product",
-      data: [81],
-      backgroundColor: getCssVariable("--color-sky-500"),
-      hoverBackgroundColor: getCssVariable("--color-sky-600"),
-      barPercentage: 1,
-      categoryPercentage: 1,
-    },
-    {
-      label: "The product doesn’t look as advertised",
-      data: [65],
-      backgroundColor: getCssVariable("--color-green-500"),
-      hoverBackgroundColor: getCssVariable("--color-green-600"),
-      barPercentage: 1,
-      categoryPercentage: 1,
-    },
-    {
-      label: "Other",
-      data: [72],
-      backgroundColor: getCssVariable("--color-gray-200"),
-      hoverBackgroundColor: getCssVariable("--color-gray-300"),
-      barPercentage: 1,
-      categoryPercentage: 1,
+      label: "Refunds",
+      data: [131, 100, 81, 65, 72],
+      backgroundColor: [
+        getCssVariable("--color-violet-500"),
+        getCssVariable("--color-violet-700"),
+        getCssVariable("--color-sky-500"),
+        getCssVariable("--color-green-500"),
+        getCssVariable("--color-gray-200"),
+      ],
+      hoverBackgroundColor: [
+        getCssVariable("--color-violet-600"),
+        getCssVariable("--color-violet-800"),
+        getCssVariable("--color-sky-600"),
+        getCssVariable("--color-green-600"),
+        getCssVariable("--color-gray-300"),
+      ],
+      barPercentage: 0.9,
+      categoryPercentage: 0.66,
+      borderRadius: 4,
     },
   ],
 };

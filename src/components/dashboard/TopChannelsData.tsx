@@ -46,4 +46,12 @@ export const topChannelsData = [
     sales: "204",
     conversion: "3.9%",
   },
+  {
+    icon: <GoogleIcon />,
+    source: "YouTube",
+    visitors: "1.5K",
+    revenues: "$1,800",
+    sales: "180",
+    conversion: "3.5%",
+  },
 ];

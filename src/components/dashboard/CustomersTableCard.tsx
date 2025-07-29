@@ -1,31 +1,49 @@
-import React from "react";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import React, { useState, useMemo } from "react";
+import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
 import CustomerRow from "./CustomerRow";
 import { customersData } from "./CustomersData";
 import { useSorting } from "@/hooks/useSorting";
 import { usePagination } from "@/hooks/usePagination";
+import AiPersonaFilter from "./AiPersonaFilter";
+import AiIcon from "@/components/icons/AiIcon";
 
 function CustomersTableCard() {
+  const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
+
+  const personas = useMemo(() => {
+    const allPersonas = customersData.map((c) => c.persona);
+    return ["All", ...Array.from(new Set(allPersonas))];
+  }, []);
+
+  const filteredData = useMemo(() => {
+    if (!selectedPersona || selectedPersona === "All") {
+      return customersData;
+    }
+    return customersData.filter(
+      (customer) => customer.persona === selectedPersona
+    );
+  }, [selectedPersona]);
+
   const { sortedData, requestSort, getSortDirection } =
-    useSorting(customersData);
-  const {
-    paginatedData,
-    currentPage,
-    totalPages,
-    nextPage,
-    prevPage,
-    goToPage,
-  } = usePagination(sortedData, 5);
+    useSorting(filteredData);
+  const { paginatedData, currentPage, totalPages, nextPage, prevPage } =
+    usePagination(sortedData, 5);
 
   const handleSort = (key: any) => {
     requestSort(key);
   };
+
   return (
-    <div className="col-span-full xl:col-span-6 shadow-xs rounded-xl glassmorphism">
-      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60">
+    <div className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
+      <header className="px-5 py-4 border-b border-gray-100 dark:border-gray-700/60 flex justify-between items-center">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           Customers
         </h2>
+        <AiPersonaFilter
+          personas={personas}
+          selectedPersona={selectedPersona}
+          onPersonaChange={setSelectedPersona}
+        />
       </header>
       <div className="p-3">
         <div className="overflow-x-auto">
@@ -92,6 +110,22 @@ function CustomersTableCard() {
                     </span>
                   </div>
                 </th>
+                <th
+                  className="p-2 whitespace-nowrap cursor-pointer"
+                  onClick={() => handleSort("persona")}
+                >
+                  <div className="font-semibold text-left flex items-center">
+                    <AiIcon className="w-4 h-4 mr-1.5" />
+                    AI Persona
+                    <span className="ml-2">
+                      {getSortDirection("persona") === "asc" ? (
+                        <ArrowUp size={16} />
+                      ) : (
+                        <ArrowDown size={16} />
+                      )}
+                    </span>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60">
@@ -103,6 +137,7 @@ function CustomersTableCard() {
                   email={customer.email}
                   location={customer.location}
                   spent={customer.spent}
+                  persona={customer.persona}
                 />
               ))}
             </tbody>
@@ -114,7 +149,7 @@ function CustomersTableCard() {
             disabled={currentPage === 1}
             className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
           >
-            Previous
+            <ChevronLeft size={"1rem"} />
           </button>
           <span className="text-xs font-semibold">
             Page {currentPage} of {totalPages}
@@ -124,7 +159,7 @@ function CustomersTableCard() {
             disabled={currentPage === totalPages}
             className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
           >
-            Next
+            <ChevronRight size={"1rem"} />
           </button>
         </div>
       </div>

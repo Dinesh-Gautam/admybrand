@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
 import ChannelRow from "./ChannelRow";
 import { topChannelsData } from "./TopChannelsData";
 import { useSorting } from "@/hooks/useSorting";
@@ -15,7 +15,7 @@ function TopChannelsCard() {
     nextPage,
     prevPage,
     goToPage,
-  } = usePagination(sortedData, 5);
+  } = usePagination(sortedData, 6);
 
   const handleSort = (key: any) => {
     requestSort(key);
@@ -131,7 +131,7 @@ function TopChannelsCard() {
             disabled={currentPage === 1}
             className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
           >
-            Previous
+            <ChevronLeft size={"1rem"} />
           </button>
           <span className="text-xs font-semibold">
             Page {currentPage} of {totalPages}
@@ -141,7 +141,7 @@ function TopChannelsCard() {
             disabled={currentPage === totalPages}
             className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
           >
-            Next
+            <ChevronRight size={"1rem"} />
           </button>
         </div>
       </div>

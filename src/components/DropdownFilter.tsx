@@ -1,34 +1,65 @@
 import React, { useState, useRef, useEffect } from "react";
 import Transition from "@/utils/Transition";
 
-interface DropdownFilterProps {
-  align?: "left" | "right";
+export interface FilterState {
+  DirectorIndirect: boolean;
+  RealTimeValue: boolean;
+  Topcahnnels: boolean;
+  SalesRefunds: boolean;
+  SalesOverTime: boolean;
+  TopCountries: boolean;
+  Customers: boolean;
+  RecentActivity: boolean;
+  IncomeExpenses: boolean;
+  RefundReasons: boolean;
 }
 
-function DropdownFilter({ align }: DropdownFilterProps) {
+interface DropdownFilterProps {
+  align?: "left" | "right";
+  onFilterChange: (filters: FilterState) => void;
+}
+
+function DropdownFilter({ align, onFilterChange }: DropdownFilterProps) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    DirectorIndirect: true,
+    RealTimeValue: true,
+    Topcahnnels: true,
+    SalesRefunds: true,
+    SalesOverTime: true,
+    TopCountries: true,
+    Customers: true,
+    RecentActivity: true,
+    IncomeExpenses: true,
+    RefundReasons: true,
+  });
 
   const trigger = useRef<HTMLButtonElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
 
-  //Clear  filtres on click clear button
-
-  const Checkrefs = {
-    DirectorIndirect: useRef<HTMLInputElement>(null),
-    RealTimeValue: useRef<HTMLInputElement>(null),
-    Topcahnnels: useRef<HTMLInputElement>(null),
-    SalesRefunds: useRef<HTMLInputElement>(null),
-    LastOrder: useRef<HTMLInputElement>(null),
-    TotalSpent: useRef<HTMLInputElement>(null),
-  };
-
-  const handleFilters = () => {
-    Object.keys(Checkrefs).forEach((key) => {
-      if (Checkrefs[key as keyof typeof Checkrefs].current?.checked) {
-        Checkrefs[key as keyof typeof Checkrefs].current!.checked = false;
-      }
+  const handleClear = () => {
+    setFilters({
+      DirectorIndirect: false,
+      RealTimeValue: false,
+      Topcahnnels: false,
+      SalesRefunds: false,
+      SalesOverTime: false,
+      TopCountries: false,
+      Customers: false,
+      RecentActivity: false,
+      IncomeExpenses: false,
+      RefundReasons: false,
     });
   };
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: checked }));
+  };
+
+  useEffect(() => {
+    onFilterChange(filters);
+  }, [filters, onFilterChange]);
 
   // close on click outside
   useEffect(() => {
@@ -100,7 +131,9 @@ function DropdownFilter({ align }: DropdownFilterProps) {
             <li className="py-1 px-3">
               <label className="flex items-center">
                 <input
-                  ref={Checkrefs.DirectorIndirect}
+                  name="DirectorIndirect"
+                  checked={filters.DirectorIndirect}
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   className="form-checkbox"
                 />
@@ -112,7 +145,9 @@ function DropdownFilter({ align }: DropdownFilterProps) {
             <li className="py-1 px-3">
               <label className="flex items-center">
                 <input
-                  ref={Checkrefs.RealTimeValue}
+                  name="RealTimeValue"
+                  checked={filters.RealTimeValue}
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   className="form-checkbox"
                 />
@@ -124,7 +159,9 @@ function DropdownFilter({ align }: DropdownFilterProps) {
             <li className="py-1 px-3">
               <label className="flex items-center">
                 <input
-                  ref={Checkrefs.Topcahnnels}
+                  name="Topcahnnels"
+                  checked={filters.Topcahnnels}
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   className="form-checkbox"
                 />
@@ -134,7 +171,9 @@ function DropdownFilter({ align }: DropdownFilterProps) {
             <li className="py-1 px-3">
               <label className="flex items-center">
                 <input
-                  ref={Checkrefs.SalesRefunds}
+                  name="SalesRefunds"
+                  checked={filters.SalesRefunds}
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   className="form-checkbox"
                 />
@@ -146,21 +185,79 @@ function DropdownFilter({ align }: DropdownFilterProps) {
             <li className="py-1 px-3">
               <label className="flex items-center">
                 <input
-                  ref={Checkrefs.LastOrder}
+                  name="SalesOverTime"
+                  checked={filters.SalesOverTime}
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   className="form-checkbox"
                 />
-                <span className="text-sm font-medium ml-2">Last Order</span>
+                <span className="text-sm font-medium ml-2">
+                  Sales Over Time
+                </span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
                 <input
-                  ref={Checkrefs.TotalSpent}
+                  name="TopCountries"
+                  checked={filters.TopCountries}
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   className="form-checkbox"
                 />
-                <span className="text-sm font-medium ml-2">Total Spent</span>
+                <span className="text-sm font-medium ml-2">Top Countries</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input
+                  name="Customers"
+                  checked={filters.Customers}
+                  onChange={handleCheckboxChange}
+                  type="checkbox"
+                  className="form-checkbox"
+                />
+                <span className="text-sm font-medium ml-2">Customers</span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input
+                  name="RecentActivity"
+                  checked={filters.RecentActivity}
+                  onChange={handleCheckboxChange}
+                  type="checkbox"
+                  className="form-checkbox"
+                />
+                <span className="text-sm font-medium ml-2">
+                  Recent Activity
+                </span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input
+                  name="IncomeExpenses"
+                  checked={filters.IncomeExpenses}
+                  onChange={handleCheckboxChange}
+                  type="checkbox"
+                  className="form-checkbox"
+                />
+                <span className="text-sm font-medium ml-2">
+                  Income VS Expenses
+                </span>
+              </label>
+            </li>
+            <li className="py-1 px-3">
+              <label className="flex items-center">
+                <input
+                  name="RefundReasons"
+                  checked={filters.RefundReasons}
+                  onChange={handleCheckboxChange}
+                  type="checkbox"
+                  className="form-checkbox"
+                />
+                <span className="text-sm font-medium ml-2">Refund Reasons</span>
               </label>
             </li>
           </ul>
@@ -168,7 +265,7 @@ function DropdownFilter({ align }: DropdownFilterProps) {
             <ul className="flex items-center justify-between">
               <li>
                 <button
-                  onClick={handleFilters}
+                  onClick={handleClear}
                   className="btn-xs bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-red-500"
                 >
                   Clear

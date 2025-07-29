@@ -1,9 +1,9 @@
 import React from "react";
 import {
-  ArrowRightIcon,
-  MessagesIcon,
+  ChatIcon,
   TrashIcon,
   UsersIcon,
+  ArrowBothwaysIcon,
 } from "@/components/icons";
 
 export enum ActivityType {
@@ -23,9 +23,9 @@ export interface Activity {
 }
 
 const ICONS_MAP = {
-  [ActivityType.Mention]: MessagesIcon,
+  [ActivityType.Mention]: ChatIcon,
   [ActivityType.Remove]: TrashIcon,
-  [ActivityType.Publish]: ArrowRightIcon,
+  [ActivityType.Publish]: ArrowBothwaysIcon,
   [ActivityType.Subscribe]: UsersIcon,
   [ActivityType.Suspend]: TrashIcon,
 };
@@ -45,8 +45,10 @@ export default function ActivityItem({ activity }: { activity: Activity }) {
 
   return (
     <li className="flex px-2">
-      <div className={`w-9 h-9 rounded-full shrink-0 my-2 mr-3 ${bgColor}`}>
-        <Icon className="w-9 h-9 fill-current text-white" />
+      <div
+        className={`w-9 h-9 rounded-full shrink-0 my-2 mr-3 flex items-center justify-center ${bgColor}`}
+      >
+        <Icon className="w-5 h-5 fill-current text-white" />
       </div>
       <div className="grow flex items-center border-b border-gray-100 dark:border-gray-700/60 text-sm py-2">
         <div className="grow flex justify-between">
@@ -71,7 +73,7 @@ export default function ActivityItem({ activity }: { activity: Activity }) {
               className="font-medium text-violet-500 hover:text-violet-600 dark:hover:text-violet-400"
               href="#0"
             >
-              View<span className="hidden sm:inline"> {"->"}</span>
+              View<span className="hidden sm:inline"> {">"}</span>
             </a>
           </div>
         </div>

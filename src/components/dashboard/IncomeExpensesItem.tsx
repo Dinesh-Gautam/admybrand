@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowRightIcon, CloseIcon } from "@/components/icons";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@/components/icons";
 
 export enum TransactionType {
   Income,
@@ -18,7 +18,7 @@ export interface Transaction {
 
 const ICONS_MAP = {
   [TransactionType.Income]: ArrowRightIcon,
-  [TransactionType.Expense]: ArrowRightIcon,
+  [TransactionType.Expense]: ArrowLeftIcon,
   [TransactionType.Canceled]: CloseIcon,
 };
 
@@ -46,9 +46,11 @@ export default function IncomeExpensesItem({
 
   return (
     <li className="flex px-2">
-      <div className={`w-9 h-9 rounded-full shrink-0 my-2 mr-3 ${bgColor}`}>
+      <div
+        className={`w-9 h-9 rounded-full shrink-0 my-2 mr-3 flex items-center justify-center ${bgColor}`}
+      >
         <Icon
-          className={`w-9 h-9 fill-current ${
+          className={`w-5 h-5 fill-current ${
             type === TransactionType.Canceled ? "text-gray-400" : "text-white"
           }`}
         />

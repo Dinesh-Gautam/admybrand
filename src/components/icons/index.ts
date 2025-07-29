@@ -16,7 +16,9 @@ export { default as CloseIcon } from "./CloseIcon";
 export { default as Logo } from "./Logo";
 export { default as ExpandCollapseIcon } from "./ExpandCollapseIcon";
 export { default as InfoIcon } from "./InfoIcon";
-
+export { default as ChatIcon } from "./ChatIcon";
 export { default as ArrowRightIcon } from "./ArrowRightIcon";
 export { default as TrashIcon } from "./TrashIcon";
 export { default as UsersIcon } from "./UsersIcon";
+export { default as ArrowBothwaysIcon } from "./ArrowBothways";
+export { default as ArrowLeftIcon } from "./ArrowLeft";

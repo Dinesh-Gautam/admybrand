@@ -32,7 +32,7 @@ const Header = ({
 
   const getHeaderClassName = () => {
     const baseClasses =
-      "sticky top-0 before:absolute before:inset-0 before:-z-10 z-30 backdrop-blur-xl border-b-1 border-gray-600/20 !bg-transparent";
+      "sticky top-0 before:absolute before:inset-0 before:-z-10 z-30 backdrop-blur-xl border-b-1 border-gray-600/10";
     const variantClasses = {
       default: "max-lg:shadow-xs",
       v2: "before:bg-white after:absolute after:h-px after:inset-x-0 after:top-full after:bg-gray-200 dark:after:bg-gray-700/60 after:-z-10 dark:before:bg-gray-800",

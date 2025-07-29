@@ -21,7 +21,7 @@ const useRealtimeChart = (data: number[], range = 35) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter(counter + 1);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [counter]);
 
