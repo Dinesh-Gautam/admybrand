@@ -7,6 +7,7 @@ import { unparse } from "papaparse";
 import { useEffect, useRef, useState } from "react";
 import AiIcon from "./icons/AiIcon";
 import html2canvas from "html2canvas-pro";
+import { Download } from "lucide-react";
 
 function DropdownExport() {
   const aiSummary =
@@ -169,22 +170,20 @@ function DropdownExport() {
     <div className="relative inline-flex">
       <button
         ref={trigger}
-        className="btn bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300 shadow-lg shadow-blue-500/50"
+        className="btn bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700/60 hover:border-gray-300 dark:hover:border-gray-600 text-gray-800 dark:text-gray-300 shadow-lg "
         aria-haspopup="true"
         onClick={() => setDropdownOpen(!dropdownOpen)}
         aria-expanded={dropdownOpen}
       >
-        <span className="sr-only">Export</span>
-        <wbr />
-        <AiIcon className="w-4 h-4 fill-current shrink-0" />
-        <span className="hidden xs:block ml-2">Export</span>
+        <Download className="w-4 h-4 text-muted-foreground" />
+        <span className="hidden sm:initial ml-2">Export</span>
       </button>
 
       <Transition
         show={dropdownOpen}
         appear
         tag="div"
-        className="origin-top-right z-10 absolute top-full right-0 min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1"
+        className="origin-top-right z-10 absolute top-full min-w-44  bg-white/50 backdrop-blur-md dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 -right-10 sm:right-0"
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
         enterEnd="opacity-100 translate-y-0"
