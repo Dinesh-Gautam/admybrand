@@ -4,7 +4,7 @@ ADmyBRAND Insights is an AI-powered marketing analytics dashboard built with Nex
 
 ## Live Demo
 
-[Link to Live Demo](YOUR_LIVE_DEMO_URL_HERE)
+[Link to Live Demo](https://admybrand-theta.vercel.app/)
 
 ## Key Features
 
