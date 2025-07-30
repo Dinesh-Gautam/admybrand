@@ -14,8 +14,8 @@ interface SidebarContextType {
   setSidebarOpen: (open: boolean) => void;
   alertsOpen: boolean;
   setAlertsOpen: (open: boolean) => void;
-  sidebar: React.RefObject<HTMLDivElement>;
-  trigger: React.RefObject<HTMLButtonElement>;
+  sidebar: React.RefObject<HTMLDivElement | null>;
+  trigger: React.RefObject<HTMLButtonElement | null>;
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
