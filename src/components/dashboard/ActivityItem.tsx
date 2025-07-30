@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   ChatIcon,
   TrashIcon,
   UsersIcon,
   ArrowBothwaysIcon,
-} from "@/components/icons";
-import { ChevronRight } from "lucide-react";
+} from '@/components/icons';
+import { ChevronRight } from 'lucide-react';
 
 export enum ActivityType {
   Mention,
@@ -32,11 +32,11 @@ const ICONS_MAP = {
 };
 
 const BG_COLOR_MAP = {
-  [ActivityType.Mention]: "bg-violet-500",
-  [ActivityType.Remove]: "bg-red-500",
-  [ActivityType.Publish]: "bg-green-500",
-  [ActivityType.Subscribe]: "bg-sky-500",
-  [ActivityType.Suspend]: "bg-violet-500",
+  [ActivityType.Mention]: 'bg-violet-500',
+  [ActivityType.Remove]: 'bg-red-500',
+  [ActivityType.Publish]: 'bg-green-500',
+  [ActivityType.Subscribe]: 'bg-sky-500',
+  [ActivityType.Suspend]: 'bg-violet-500',
 };
 
 export default function ActivityItem({ activity }: { activity: Activity }) {
@@ -59,14 +59,14 @@ export default function ActivityItem({ activity }: { activity: Activity }) {
               href="#0"
             >
               {user}
-            </a>{" "}
-            mentioned{" "}
+            </a>{' '}
+            mentioned{' '}
             <a
               className="font-medium text-gray-800 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white"
               href="#0"
             >
               {post}
-            </a>{" "}
+            </a>{' '}
             in a new post
           </div>
           <div className="shrink-0 self-end ml-2">
@@ -75,7 +75,7 @@ export default function ActivityItem({ activity }: { activity: Activity }) {
               href="#0"
             >
               View
-              <ChevronRight size="1rem" className="mt-0.5" />
+              <ChevronRight size="1rem" />
             </a>
           </div>
         </div>

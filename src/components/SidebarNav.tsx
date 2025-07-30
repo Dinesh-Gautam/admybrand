@@ -54,7 +54,7 @@ const SidebarNav = ({
             </span>
           </div>
           <div
-            className={`flex shrink-0 ml-2 items-center mt-1 transition-all ${
+            className={`flex shrink-0 ml-2 items-center transition-all ${
               open && 'rotate-180'
             }`}
           >

@@ -1,55 +1,50 @@
-import React, { useState, useRef, useEffect } from "react";
-import Transition from "@/utils/Transition";
+import React, { useState, useEffect } from 'react';
+import Transition from '@/utils/Transition';
+import { FilterState } from '@/types';
+import { useDropdown } from '@/hooks/useDropdown';
+import FilterIcon from './icons/FilterIcon';
 
-export interface FilterState {
-  DirectorIndirect: boolean;
-  RealTimeValue: boolean;
-  Topcahnnels: boolean;
-  SalesRefunds: boolean;
-  SalesOverTime: boolean;
-  TopCountries: boolean;
-  Customers: boolean;
-  RecentActivity: boolean;
-  IncomeExpenses: boolean;
-  RefundReasons: boolean;
-}
+const filterConfig = [
+  { name: 'DirectIndirect', label: 'Direct VS Indirect' },
+  { name: 'RealTimeValue', label: 'Real Time Value' },
+  { name: 'TopChannels', label: 'Top Channels' },
+  { name: 'SalesRefunds', label: 'Sales VS Refunds' },
+  { name: 'SalesOverTime', label: 'Sales Over Time' },
+  { name: 'TopCountries', label: 'Top Countries' },
+  { name: 'Customers', label: 'Customers' },
+  { name: 'RecentActivity', label: 'Recent Activity' },
+  { name: 'IncomeExpenses', label: 'Income VS Expenses' },
+  { name: 'RefundReasons', label: 'Refund Reasons' },
+];
+
+const initialFilterState: FilterState = {
+  DirectIndirect: true,
+  RealTimeValue: true,
+  TopChannels: true,
+  SalesRefunds: true,
+  SalesOverTime: true,
+  TopCountries: true,
+  Customers: true,
+  RecentActivity: true,
+  IncomeExpenses: true,
+  RefundReasons: true,
+};
 
 interface DropdownFilterProps {
-  align?: "left" | "right";
+  align?: 'left' | 'right';
   onFilterChange: (filters: FilterState) => void;
 }
 
 function DropdownFilter({ align, onFilterChange }: DropdownFilterProps) {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [filters, setFilters] = useState<FilterState>({
-    DirectorIndirect: true,
-    RealTimeValue: true,
-    Topcahnnels: true,
-    SalesRefunds: true,
-    SalesOverTime: true,
-    TopCountries: true,
-    Customers: true,
-    RecentActivity: true,
-    IncomeExpenses: true,
-    RefundReasons: true,
-  });
-
-  const trigger = useRef<HTMLButtonElement>(null);
-  const dropdown = useRef<HTMLDivElement>(null);
+  const [filters, setFilters] = useState<FilterState>(initialFilterState);
+  const { dropdownOpen, setDropdownOpen, trigger, dropdown } =
+    useDropdown<HTMLDivElement>();
 
   const handleClear = () => {
-    setFilters({
-      DirectorIndirect: false,
-      RealTimeValue: false,
-      Topcahnnels: false,
-      SalesRefunds: false,
-      SalesOverTime: false,
-      TopCountries: false,
-      Customers: false,
-      RecentActivity: false,
-      IncomeExpenses: false,
-      RefundReasons: false,
-    });
+    const clearedFilters = Object.fromEntries(
+      Object.keys(filters).map((key) => [key, false]),
+    ) as unknown as FilterState;
+    setFilters(clearedFilters);
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,32 +55,6 @@ function DropdownFilter({ align, onFilterChange }: DropdownFilterProps) {
   useEffect(() => {
     onFilterChange(filters);
   }, [filters, onFilterChange]);
-
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }: MouseEvent) => {
-      if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target as Node) ||
-        trigger.current?.contains(target as Node)
-      )
-        return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!dropdownOpen || keyCode !== 27) return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
 
   return (
     <div className="relative inline-flex">
@@ -98,23 +67,16 @@ function DropdownFilter({ align, onFilterChange }: DropdownFilterProps) {
       >
         <span className="sr-only">Filter</span>
         <wbr />
-        <svg
-          className="fill-current"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-        >
-          <path d="M0 3a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1ZM3 8a1 1 0 0 1 1-1h8a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1ZM7 12a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H7Z" />
-        </svg>
+        <FilterIcon />
       </button>
       <Transition
         appear
         show={dropdownOpen}
         tag="div"
         className={`origin-top-right z-10 absolute top-full left-0 right-auto min-w-56 bg-white/50 backdrop-blur-md dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700/60 pt-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
-          align === "right"
-            ? "md:left-auto md:right-0"
-            : "md:left-0 md:right-auto"
+          align === 'right'
+            ? 'md:left-auto md:right-0'
+            : 'md:left-0 md:right-auto'
         }`}
         enter="transition ease-out duration-200 transform"
         enterStart="opacity-0 -translate-y-2"
@@ -128,138 +90,22 @@ function DropdownFilter({ align, onFilterChange }: DropdownFilterProps) {
             Filters
           </div>
           <ul className="mb-4">
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="DirectorIndirect"
-                  checked={filters.DirectorIndirect}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">
-                  Direct VS Indirect
-                </span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="RealTimeValue"
-                  checked={filters.RealTimeValue}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">
-                  Real Time Value
-                </span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="Topcahnnels"
-                  checked={filters.Topcahnnels}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">Top Channels</span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="SalesRefunds"
-                  checked={filters.SalesRefunds}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">
-                  Sales VS Refunds
-                </span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="SalesOverTime"
-                  checked={filters.SalesOverTime}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">
-                  Sales Over Time
-                </span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="TopCountries"
-                  checked={filters.TopCountries}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">Top Countries</span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="Customers"
-                  checked={filters.Customers}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">Customers</span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="RecentActivity"
-                  checked={filters.RecentActivity}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">
-                  Recent Activity
-                </span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="IncomeExpenses"
-                  checked={filters.IncomeExpenses}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">
-                  Income VS Expenses
-                </span>
-              </label>
-            </li>
-            <li className="py-1 px-3">
-              <label className="flex items-center">
-                <input
-                  name="RefundReasons"
-                  checked={filters.RefundReasons}
-                  onChange={handleCheckboxChange}
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-                <span className="text-sm font-medium ml-2">Refund Reasons</span>
-              </label>
-            </li>
+            {filterConfig.map((filter) => (
+              <li key={filter.name} className="py-1 px-3">
+                <label className="flex items-center">
+                  <input
+                    name={filter.name}
+                    checked={filters[filter.name as keyof FilterState]}
+                    onChange={handleCheckboxChange}
+                    type="checkbox"
+                    className="form-checkbox"
+                  />
+                  <span className="text-sm font-medium ml-2">
+                    {filter.label}
+                  </span>
+                </label>
+              </li>
+            ))}
           </ul>
           <div className="py-2 px-3 border-t border-gray-200 dark:border-gray-700/60 bg-black/5 dark:bg-black/10">
             <ul className="flex items-center justify-between">

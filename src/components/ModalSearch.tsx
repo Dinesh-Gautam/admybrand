@@ -1,46 +1,62 @@
-import React, { useRef, useEffect } from "react";
-import Link from "next/link";
-import Transition from "@/utils/Transition";
+import React, { useRef, useEffect } from 'react';
+import Link from 'next/link';
+import Transition from '@/utils/Transition';
+import { useModal } from '@/hooks/useModal';
+import SearchIcon from './icons/SearchIcon';
+import RecentSearchIcon from './icons/RecentSearchIcon';
+import RecentPageIcon from './icons/RecentPageIcon';
+
+interface SearchEntry {
+  id: string;
+  label: string;
+  link: string;
+}
+
+interface PageEntry {
+  id: string;
+  title: string;
+  category: string;
+  link: string;
+}
 
 interface ModalSearchProps {
   id: string;
   searchId: string;
-  modalOpen: boolean;
-  setModalOpen: (open: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+  recentSearches: SearchEntry[];
+  recentPages: PageEntry[];
 }
 
+/**
+ * A modal search component that allows users to search for content.
+ * @param id - The unique ID for the modal transition.
+ * @param searchId - The unique ID for the search input.
+ * @param isOpen - Whether the modal is open.
+ * @param setIsOpen - A function to update the modal's open state.
+ * @param recentSearches - An array of recent search entries.
+ * @param recentPages - An array of recent page entries.
+ */
 function ModalSearch({
   id,
   searchId,
-  modalOpen,
-  setModalOpen,
+  isOpen,
+  setIsOpen,
+  recentSearches,
+  recentPages,
 }: ModalSearchProps) {
-  const modalContent = useRef<HTMLDivElement>(null);
+  const { modalOpen, setModalOpen, modalContent } = useModal();
   const searchInput = useRef<HTMLInputElement>(null);
 
-  // close on click outside
   useEffect(() => {
-    const clickHandler = ({ target }: MouseEvent) => {
-      if (!modalOpen || modalContent.current?.contains(target as Node)) return;
-      setModalOpen(false);
-    };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!modalOpen || keyCode !== 27) return;
-      setModalOpen(false);
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
+    setIsOpen(modalOpen);
+  }, [modalOpen, setIsOpen]);
 
   useEffect(() => {
-    modalOpen && searchInput.current?.focus();
-  }, [modalOpen]);
+    if (isOpen) {
+      searchInput.current?.focus();
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -96,16 +112,7 @@ function ModalSearch({
                 type="submit"
                 aria-label="Search"
               >
-                <svg
-                  className="shrink-0 fill-current text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400 ml-4 mr-2"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M7 14c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7zM7 2C4.243 2 2 4.243 2 7s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5z" />
-                  <path d="M15.707 14.293L13.314 11.9a8.019 8.019 0 01-1.414 1.414l2.393 2.393a.997.997 0 001.414 0 .999.999 0 000-1.414z" />
-                </svg>
+                <SearchIcon className="shrink-0 fill-current text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400 ml-4 mr-2" />
               </button>
             </div>
           </form>
@@ -116,108 +123,18 @@ function ModalSearch({
                 Recent searches
               </div>
               <ul className="text-sm">
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
+                {recentSearches.map((search) => (
+                  <li key={search.id}>
+                    <Link
+                      className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
+                      href={search.link}
+                      onClick={() => setModalOpen(false)}
                     >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Form Builder - 23 hours on-demand video</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Access Mosaic on mobile and TV</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Product Update - Q4 2024</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Master Digital Marketing Strategy course</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Dedicated forms for products</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Product Update - Q4 2024</span>
-                  </Link>
-                </li>
+                      <RecentSearchIcon className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3" />
+                      <span>{search.label}</span>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* Recent pages */}
@@ -226,50 +143,23 @@ function ModalSearch({
                 Recent pages
               </div>
               <ul className="text-sm">
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
+                {recentPages.map((page) => (
+                  <li key={page.id}>
+                    <Link
+                      className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
+                      href={page.link}
+                      onClick={() => setModalOpen(false)}
                     >
-                      <path d="M14 0H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8l5-5V1c0-.6-.4-1-1-1zM3 2h10v8H9v4H3V2z" />
-                    </svg>
-                    <span>
-                      <span className="font-medium">Messages</span> -{" "}
-                      <span className="text-gray-600 dark:text-gray-400">
-                        Conversation / … / Mike Mills
+                      <RecentPageIcon className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3" />
+                      <span>
+                        <span className="font-medium">{page.title}</span> -{' '}
+                        <span className="text-gray-600 dark:text-gray-400">
+                          {page.category}
+                        </span>
                       </span>
-                    </span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700/20 rounded-lg"
-                    href="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="fill-current text-gray-400 dark:text-gray-500 shrink-0 mr-3"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="M14 0H2c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h8l5-5V1c0-.6-.4-1-1-1zM3 2h10v8H9v4H3V2z" />
-                    </svg>
-                    <span>
-                      <span className="font-medium">Messages</span> -{" "}
-                      <span className="text-gray-600 dark:text-gray-400">
-                        Conversation / … / Eva Patrick
-                      </span>
-                    </span>
-                  </Link>
-                </li>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

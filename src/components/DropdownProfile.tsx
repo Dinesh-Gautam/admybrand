@@ -1,44 +1,24 @@
-import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
-import Transition from "@/utils/Transition";
-import Image from "next/image";
-import UserAvatar from "@/images/logo.png";
+import React from 'react';
+import Link from 'next/link';
+import Transition from '@/utils/Transition';
+import Image from 'next/image';
+import { useDropdown } from '@/hooks/useDropdown';
+import { User } from '@/types';
+import ChevronDownIcon from './icons/ChevronDownIcon';
 
 interface DropdownProfileProps {
-  align?: "left" | "right";
+  align?: 'left' | 'right';
+  user: User;
 }
 
-function DropdownProfile({ align }: DropdownProfileProps) {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const trigger = useRef<HTMLButtonElement>(null);
-  const dropdown = useRef<HTMLDivElement>(null);
-
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }: MouseEvent) => {
-      if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target as Node) ||
-        trigger.current?.contains(target as Node)
-      )
-        return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!dropdownOpen || keyCode !== 27) return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
+/**
+ * A dropdown component that displays user profile information and links.
+ * @param align - The alignment of the dropdown menu.
+ * @param user - An object containing user information.
+ */
+function DropdownProfile({ align, user }: DropdownProfileProps) {
+  const { dropdownOpen, setDropdownOpen, trigger, dropdown } =
+    useDropdown<HTMLDivElement>();
 
   return (
     <div className="relative inline-flex">
@@ -51,27 +31,22 @@ function DropdownProfile({ align }: DropdownProfileProps) {
       >
         <Image
           className="w-8 h-8 rounded-full"
-          src={UserAvatar}
+          src={user.avatar}
           width="32"
           height="32"
-          alt="User"
+          alt={user.name}
         />
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium text-gray-600 dark:text-gray-100 group-hover:text-gray-800 dark:group-hover:text-white">
-            ADmyBRAND
+            {user.name}
           </span>
-          <svg
-            className="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500"
-            viewBox="0 0 12 12"
-          >
-            <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-          </svg>
+          <ChevronDownIcon className="w-3 h-3 shrink-0 ml-1 fill-current text-gray-400 dark:text-gray-500" />
         </div>
       </button>
 
       <Transition
         className={`origin-top-right z-10 absolute top-full min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700/60 py-1.5 rounded-lg shadow-lg overflow-hidden mt-1 ${
-          align === "right" ? "right-0" : "left-0"
+          align === 'right' ? 'right-0' : 'left-0'
         }`}
         show={dropdownOpen}
         appear
@@ -89,10 +64,10 @@ function DropdownProfile({ align }: DropdownProfileProps) {
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-gray-200 dark:border-gray-700/60">
             <div className="font-medium text-gray-800 dark:text-gray-100">
-              ADmyBRAND
+              {user.name}
             </div>
             <div className="text-xs text-gray-500 dark:text-gray-400 italic">
-              Administrator
+              {user.role}
             </div>
           </div>
           <ul>

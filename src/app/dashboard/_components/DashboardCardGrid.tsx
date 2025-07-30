@@ -1,19 +1,19 @@
-import PlusSalesCard from "@/components/dashboard/PlusSalesCard";
-import AdvancedSalesCard from "@/components/dashboard/AdvancedSalesCard";
-import ProfessionalSalesCard from "@/components/dashboard/ProfessionalSalesCard";
-import DirectVsIndirectCard from "@/components/dashboard/DirectVsIndirectCard";
-import RealtimeValueCard from "@/components/dashboard/RealtimeValueCard";
-import TopCountriesCard from "@/components/dashboard/TopCountriesCard";
-import TopChannelsCard from "@/components/dashboard/TopChannelsCard";
-import SalesOverTimeCard from "@/components/dashboard/SalesOverTimeCard";
-import SalesVsRefundsCard from "@/components/dashboard/SalesVsRefundsCard";
-import CustomersTableCard from "@/components/dashboard/CustomersTableCard";
-import RefundReasonsCard from "@/components/dashboard/RefundReasonsCard";
-import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
-import IncomeExpensesCard from "@/components/dashboard/IncomeExpensesCard";
-import AiInsightSummaryCard from "@/components/dashboard/AiInsightSummaryCard";
-import React from "react";
-import { FilterState } from "@/components/DropdownFilter";
+import PlusSalesCard from '@/components/dashboard/PlusSalesCard';
+import AdvancedSalesCard from '@/components/dashboard/AdvancedSalesCard';
+import ProfessionalSalesCard from '@/components/dashboard/ProfessionalSalesCard';
+import DirectVsIndirectCard from '@/components/dashboard/DirectVsIndirectCard';
+import RealtimeValueCard from '@/components/dashboard/RealtimeValueCard';
+import TopCountriesCard from '@/components/dashboard/TopCountriesCard';
+import TopChannelsCard from '@/components/dashboard/TopChannelsCard';
+import SalesOverTimeCard from '@/components/dashboard/SalesOverTimeCard';
+import SalesVsRefundsCard from '@/components/dashboard/SalesVsRefundsCard';
+import CustomersTableCard from '@/components/dashboard/CustomersTableCard';
+import RefundReasonsCard from '@/components/dashboard/RefundReasonsCard';
+import RecentActivityCard from '@/components/dashboard/RecentActivityCard';
+import IncomeExpensesCard from '@/components/dashboard/IncomeExpensesCard';
+import AiInsightSummaryCard from '@/components/dashboard/AiInsightSummaryCard';
+import React from 'react';
+import type { FilterState } from '@/types';
 
 interface DashboardCardGridProps {
   filters: FilterState;
@@ -34,11 +34,11 @@ const DashboardCardGrid = ({ filters }: DashboardCardGridProps) => {
       {/* Sales Analysis */}
       {filters.SalesOverTime && <SalesOverTimeCard />}
       {filters.SalesRefunds && <SalesVsRefundsCard />}
-      {filters.DirectorIndirect && <DirectVsIndirectCard />}
+      {filters.DirectIndirect && <DirectVsIndirectCard />}
 
       {/* Acquisition */}
       {filters.RefundReasons && <RefundReasonsCard />}
-      {filters.Topcahnnels && <TopChannelsCard />}
+      {filters.TopChannels && <TopChannelsCard />}
 
       {/* Customer Activity */}
       {filters.Customers && <CustomersTableCard />}

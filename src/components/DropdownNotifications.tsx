@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
   NOTIFICATION_DOT_BORDER,
@@ -6,42 +6,26 @@ import {
   NOTIFICATION_DOT_SIZE,
 } from '@/constants/styles';
 import Transition from '@/utils/Transition';
+import { useDropdown } from '@/hooks/useDropdown';
+import { Notification } from '@/types';
+import NotificationIcon from './icons/NotificationIcon';
 
 interface DropdownNotificationsProps {
   align?: 'left' | 'right';
+  notifications: Notification[];
 }
 
-function DropdownNotifications({ align }: DropdownNotificationsProps) {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const trigger = useRef<HTMLButtonElement>(null);
-  const dropdown = useRef<HTMLDivElement>(null);
-
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }: MouseEvent) => {
-      if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target as Node) ||
-        trigger.current?.contains(target as Node)
-      )
-        return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
-  });
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!dropdownOpen || keyCode !== 27) return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
-  });
+/**
+ * A dropdown component that displays a list of notifications.
+ * @param align - The alignment of the dropdown menu.
+ * @param notifications - An array of notification objects.
+ */
+function DropdownNotifications({
+  align,
+  notifications,
+}: DropdownNotificationsProps) {
+  const { dropdownOpen, setDropdownOpen, trigger, dropdown } =
+    useDropdown<HTMLDivElement>();
 
   return (
     <div className="relative inline-flex">
@@ -55,16 +39,7 @@ function DropdownNotifications({ align }: DropdownNotificationsProps) {
         aria-expanded={dropdownOpen}
       >
         <span className="sr-only">Notifications</span>
-        <svg
-          className="fill-current text-gray-500/80 dark:text-gray-400/80"
-          width={16}
-          height={16}
-          viewBox="0 0 16 16"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path d="M7 0a7 7 0 0 0-7 7c0 1.202.308 2.33.84 3.316l-.789 2.368a1 1 0 0 0 1.265 1.265l2.595-.865a1 1 0 0 0-.632-1.898l-.698.233.3-.9a1 1 0 0 0-.104-.85A4.97 4.97 0 0 1 2 7a5 5 0 0 1 5-5 4.99 4.99 0 0 1 4.093 2.135 1 1 0 1 0 1.638-1.148A6.99 6.99 0 0 0 7 0Z" />
-          <path d="M11 6a5 5 0 0 0 0 10c.807 0 1.567-.194 2.24-.533l1.444.482a1 1 0 0 0 1.265-1.265l-.482-1.444A4.962 4.962 0 0 0 16 11a5 5 0 0 0-5-5Zm-3 5a3 3 0 0 1 6 0c0 .588-.171 1.134-.466 1.6a1 1 0 0 0-.115.82 1 1 0 0 0-.82.114A2.973 2.973 0 0 1 11 14a3 3 0 0 1-3-3Z" />
-        </svg>
+        <NotificationIcon className="fill-current text-gray-500/80 dark:text-gray-400/80" />
         <div
           className={`absolute top-0 right-0 rounded-full ${NOTIFICATION_DOT_SIZE} ${NOTIFICATION_DOT_COLOR} ${NOTIFICATION_DOT_BORDER}`}
         ></div>
@@ -92,63 +67,29 @@ function DropdownNotifications({ align }: DropdownNotificationsProps) {
             Notifications
           </div>
           <ul>
-            <li className="border-b border-gray-200 dark:border-gray-700/60 last:border-0">
-              <Link
-                className="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-700/20"
-                href="#0"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+            {notifications.map((notification) => (
+              <li
+                key={notification.id}
+                className="border-b border-gray-200 dark:border-gray-700/60 last:border-0"
               >
-                <span className="block text-sm mb-2">
-                  📣{' '}
-                  <span className="font-medium text-gray-800 dark:text-gray-100">
-                    Edit your information in a swipe
-                  </span>{' '}
-                  Sint occaecat cupidatat non proident, sunt in culpa qui
-                  officia deserunt mollit anim.
-                </span>
-                <span className="block text-xs font-medium text-gray-400 dark:text-gray-500">
-                  Feb 12, 2024
-                </span>
-              </Link>
-            </li>
-            <li className="border-b border-gray-200 dark:border-gray-700/60 last:border-0">
-              <Link
-                className="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-700/20"
-                href="#0"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <span className="block text-sm mb-2">
-                  📣{' '}
-                  <span className="font-medium text-gray-800 dark:text-gray-100">
-                    Edit your information in a swipe
-                  </span>{' '}
-                  Sint occaecat cupidatat non proident, sunt in culpa qui
-                  officia deserunt mollit anim.
-                </span>
-                <span className="block text-xs font-medium text-gray-400 dark:text-gray-500">
-                  Feb 9, 2024
-                </span>
-              </Link>
-            </li>
-            <li className="border-b border-gray-200 dark:border-gray-700/60 last:border-0">
-              <Link
-                className="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-700/20"
-                href="#0"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-              >
-                <span className="block text-sm mb-2">
-                  🚀
-                  <span className="font-medium text-gray-800 dark:text-gray-100">
-                    Say goodbye to paper receipts!
-                  </span>{' '}
-                  Sint occaecat cupidatat non proident, sunt in culpa qui
-                  officia deserunt mollit anim.
-                </span>
-                <span className="block text-xs font-medium text-gray-400 dark:text-gray-500">
-                  Jan 24, 2024
-                </span>
-              </Link>
-            </li>
+                <Link
+                  className="block py-2 px-4 hover:bg-gray-50 dark:hover:bg-gray-700/20"
+                  href={notification.link}
+                  onClick={() => setDropdownOpen(false)}
+                >
+                  <span className="block text-sm mb-2">
+                    {notification.icon}{' '}
+                    <span className="font-medium text-gray-800 dark:text-gray-100">
+                      {notification.title}
+                    </span>{' '}
+                    {notification.description}
+                  </span>
+                  <span className="block text-xs font-medium text-gray-400 dark:text-gray-500">
+                    {notification.date}
+                  </span>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </Transition>
