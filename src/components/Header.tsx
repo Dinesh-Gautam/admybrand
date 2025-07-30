@@ -80,7 +80,7 @@ const Header = ({ variant, smartAlerts }: HeaderProps) => {
                 <AiIcon className="mt-0.5" />
                 <span className="text-sm font-medium ml-2 relative">
                   Smart Alerts
-                  <div className="absolute top-0 -right-2 h-2 w-2 border-2 border-white bg-red-500 rounded-full"></div>
+                  <div className="absolute top-0 -right-2 h-2 w-2 bg-red-500 rounded-full"></div>
                 </span>
               </div>
             </button>

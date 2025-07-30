@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useThemeProvider } from "@/utils/theme-provider";
+import React, { useRef, useEffect, useState } from 'react';
+import { useThemeProvider } from '@/utils/theme-provider';
 
-import { chartColors } from "./ChartjsConfig";
+import { chartColors } from './ChartjsConfig';
 import {
   Chart,
   BarController,
@@ -11,11 +11,11 @@ import {
   Tooltip,
   Legend,
   ChartData,
-} from "chart.js";
-import "chartjs-adapter-moment";
+} from 'chart.js';
+import 'chartjs-adapter-moment';
 
 // Import utilities
-import { formatValue } from "@/utils/chart";
+import { formatValue } from '@/utils/chart';
 
 Chart.register(
   BarController,
@@ -23,20 +23,40 @@ Chart.register(
   LinearScale,
   TimeScale,
   Tooltip,
-  Legend
+  Legend,
 );
 
+/**
+ * Props for the BarChart02 component.
+ */
 interface BarChart02Props {
-  data: ChartData<"bar">;
+  /**
+   * The data to be displayed in the stacked bar chart.
+   */
+  data: ChartData<'bar'>;
+  /**
+   * The width of the chart canvas.
+   */
   width: number;
+  /**
+   * The height of the chart canvas.
+   */
   height: number;
 }
 
+/**
+ * Renders a stacked bar chart with custom styling.
+ * @param {BarChart02Props} props - The component props.
+ * @param {ChartData<"bar">} props.data - The data for the stacked bar chart.
+ * @param {number} props.width - The width of the chart.
+ * @param {number} props.height - The height of the chart.
+ * @returns {JSX.Element} The BarChart02 component.
+ */
 function BarChart02({ data, width, height }: BarChart02Props) {
   const [chart, setChart] = useState<Chart | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const { currentTheme } = useThemeProvider();
-  const darkMode = currentTheme === "dark";
+  const darkMode = currentTheme === 'dark';
   const {
     textColor,
     gridColor,
@@ -50,7 +70,7 @@ function BarChart02({ data, width, height }: BarChart02Props) {
     if (!ctx) return;
     // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
-      type: "bar",
+      type: 'bar',
       data: data,
       options: {
         layout: {
@@ -79,12 +99,12 @@ function BarChart02({ data, width, height }: BarChart02Props) {
           },
           x: {
             stacked: true,
-            type: "time",
+            type: 'time',
             time: {
-              parser: "MM-DD-YYYY",
-              unit: "month",
+              parser: 'MM-DD-YYYY',
+              unit: 'month',
               displayFormats: {
-                month: "MMM YY",
+                month: 'MMM YY',
               },
             },
             border: {
@@ -106,7 +126,7 @@ function BarChart02({ data, width, height }: BarChart02Props) {
           },
           tooltip: {
             callbacks: {
-              title: () => "", // Disable tooltip title
+              title: () => '', // Disable tooltip title
               label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
@@ -122,7 +142,7 @@ function BarChart02({ data, width, height }: BarChart02Props) {
         },
         interaction: {
           intersect: false,
-          mode: "nearest",
+          mode: 'nearest',
         },
         animation: {
           duration: 200,
@@ -154,7 +174,7 @@ function BarChart02({ data, width, height }: BarChart02Props) {
       chart.options.plugins!.tooltip!.backgroundColor = tooltipBgColor.light;
       chart.options.plugins!.tooltip!.borderColor = tooltipBorderColor.light;
     }
-    chart.update("none");
+    chart.update('none');
   }, [currentTheme]);
 
   return <canvas ref={canvas} width={width} height={height}></canvas>;

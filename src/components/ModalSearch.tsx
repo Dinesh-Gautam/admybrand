@@ -6,12 +6,21 @@ import SearchIcon from './icons/SearchIcon';
 import RecentSearchIcon from './icons/RecentSearchIcon';
 import RecentPageIcon from './icons/RecentPageIcon';
 
+/**
+ * Represents a single recent search entry.
+ */
 interface SearchEntry {
+  /** Unique identifier for the search entry. */
   id: string;
+  /** The text label for the search entry. */
   label: string;
+  /** The link to navigate to for this search entry. */
   link: string;
 }
 
+/**
+ * Represents a single recent page entry.
+ */
 interface PageEntry {
   id: string;
   title: string;
@@ -19,23 +28,35 @@ interface PageEntry {
   link: string;
 }
 
+/**
+ * Props for the ModalSearch component.
+ */
 interface ModalSearchProps {
+  /** The unique ID for the modal transition. */
   id: string;
+  /** The unique ID for the search input element. */
   searchId: string;
+  /** Whether the modal is currently open. */
   isOpen: boolean;
+  /** Function to control the open/closed state of the modal. */
   setIsOpen: (isOpen: boolean) => void;
+  /** An array of recent search entries to display. */
   recentSearches: SearchEntry[];
+  /** An array of recent page entries to display. */
   recentPages: PageEntry[];
 }
 
 /**
  * A modal search component that allows users to search for content.
- * @param id - The unique ID for the modal transition.
- * @param searchId - The unique ID for the search input.
- * @param isOpen - Whether the modal is open.
- * @param setIsOpen - A function to update the modal's open state.
- * @param recentSearches - An array of recent search entries.
- * @param recentPages - An array of recent page entries.
+ * It displays recent searches and pages, and integrates with a modal management hook.
+ * @param {ModalSearchProps} props - The component props.
+ * @param {string} props.id - The unique ID for the modal transition.
+ * @param {string} props.searchId - The unique ID for the search input.
+ * @param {boolean} props.isOpen - Whether the modal is currently open.
+ * @param {(isOpen: boolean) => void} props.setIsOpen - Function to update the modal's open state.
+ * @param {SearchEntry[]} props.recentSearches - An array of recent search entries.
+ * @param {PageEntry[]} props.recentPages - An array of recent page entries.
+ * @returns {JSX.Element} The ModalSearch component.
  */
 function ModalSearch({
   id,

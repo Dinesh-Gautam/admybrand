@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useThemeProvider } from "@/utils/theme-provider";
+import React, { useRef, useEffect, useState } from 'react';
+import { useThemeProvider } from '@/utils/theme-provider';
 
-import { chartColors } from "./ChartjsConfig";
+import { chartColors } from './ChartjsConfig';
 import {
   Chart,
   BarController,
@@ -12,11 +12,11 @@ import {
   Legend,
   ChartData,
   ChartOptions,
-} from "chart.js";
-import "chartjs-adapter-moment";
+} from 'chart.js';
+import 'chartjs-adapter-moment';
 
 // Import utilities
-import { formatValue } from "@/utils/chart";
+import { formatValue } from '@/utils/chart';
 
 Chart.register(
   BarController,
@@ -24,21 +24,41 @@ Chart.register(
   LinearScale,
   TimeScale,
   Tooltip,
-  Legend
+  Legend,
 );
 
+/**
+ * Props for the BarChart01 component.
+ */
 interface BarChart01Props {
-  data: ChartData<"bar">;
+  /**
+   * The data to be displayed in the bar chart.
+   */
+  data: ChartData<'bar'>;
+  /**
+   * The width of the chart canvas.
+   */
   width: number;
+  /**
+   * The height of the chart canvas.
+   */
   height: number;
 }
 
+/**
+ * Renders a bar chart with custom styling and legend.
+ * @param {BarChart01Props} props - The component props.
+ * @param {ChartData<"bar">} props.data - The data for the bar chart.
+ * @param {number} props.width - The width of the chart.
+ * @param {number} props.height - The height of the chart.
+ * @returns {JSX.Element} The BarChart01 component.
+ */
 function BarChart01({ data, width, height }: BarChart01Props) {
   const [chart, setChart] = useState<Chart | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const legend = useRef<HTMLUListElement>(null);
   const { currentTheme } = useThemeProvider();
-  const darkMode = currentTheme === "dark";
+  const darkMode = currentTheme === 'dark';
   const {
     textColor,
     gridColor,
@@ -52,7 +72,7 @@ function BarChart01({ data, width, height }: BarChart01Props) {
     if (!ctx) return;
     // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
-      type: "bar",
+      type: 'bar',
       data: data,
       options: {
         layout: {
@@ -78,12 +98,12 @@ function BarChart01({ data, width, height }: BarChart01Props) {
             },
           },
           x: {
-            type: "time",
+            type: 'time',
             time: {
-              parser: "MM-DD-YYYY",
-              unit: "month",
+              parser: 'MM-DD-YYYY',
+              unit: 'month',
               displayFormats: {
-                month: "MMM YY",
+                month: 'MMM YY',
               },
             },
             border: {
@@ -103,7 +123,7 @@ function BarChart01({ data, width, height }: BarChart01Props) {
           },
           tooltip: {
             callbacks: {
-              title: () => "", // Disable tooltip title
+              title: () => '', // Disable tooltip title
               label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
@@ -119,7 +139,7 @@ function BarChart01({ data, width, height }: BarChart01Props) {
         },
         interaction: {
           intersect: false,
-          mode: "nearest",
+          mode: 'nearest',
         },
         animation: {
           duration: 500,
@@ -129,7 +149,7 @@ function BarChart01({ data, width, height }: BarChart01Props) {
       },
       plugins: [
         {
-          id: "htmlLegend",
+          id: 'htmlLegend',
           afterUpdate(c, args, options) {
             const ul = legend.current;
             if (!ul) return;
@@ -141,54 +161,54 @@ function BarChart01({ data, width, height }: BarChart01Props) {
             const items =
               c.options.plugins?.legend?.labels &&
               typeof c.options.plugins.legend.labels.generateLabels ===
-                "function"
+                'function'
                 ? c.options.plugins.legend.labels.generateLabels(c)
                 : [];
             items?.forEach((item) => {
-              const li = document.createElement("li");
+              const li = document.createElement('li');
               // Button element
-              const button = document.createElement("button");
-              button.style.display = "inline-flex";
-              button.style.alignItems = "center";
-              button.style.opacity = item.hidden ? ".3" : "";
+              const button = document.createElement('button');
+              button.style.display = 'inline-flex';
+              button.style.alignItems = 'center';
+              button.style.opacity = item.hidden ? '.3' : '';
               button.onclick = () => {
                 c.setDatasetVisibility(
                   item.datasetIndex!,
-                  !c.isDatasetVisible(item.datasetIndex!)
+                  !c.isDatasetVisible(item.datasetIndex!),
                 );
                 c.update();
               };
               // Color box
-              const box = document.createElement("span");
-              box.style.display = "block";
-              box.style.width = "12px";
-              box.style.height = "12px";
-              box.style.borderRadius = "9999px";
-              box.style.marginRight = "8px";
-              box.style.borderWidth = "3px";
+              const box = document.createElement('span');
+              box.style.display = 'block';
+              box.style.width = '12px';
+              box.style.height = '12px';
+              box.style.borderRadius = '9999px';
+              box.style.marginRight = '8px';
+              box.style.borderWidth = '3px';
               box.style.borderColor = item.fillStyle as string;
-              box.style.pointerEvents = "none";
+              box.style.pointerEvents = 'none';
               // Label
-              const labelContainer = document.createElement("span");
-              labelContainer.style.display = "flex";
-              labelContainer.style.alignItems = "center";
-              const value = document.createElement("span");
-              value.classList.add("text-gray-800", "dark:text-gray-100");
-              value.style.fontSize = "30px";
-              value.style.lineHeight = "1.2";
-              value.style.fontWeight = "700";
-              value.style.marginRight = "8px";
-              value.style.pointerEvents = "none";
-              const label = document.createElement("span");
-              label.classList.add("text-gray-500", "dark:text-gray-400");
-              label.style.fontSize = "14px";
-              label.style.lineHeight = "1.4";
+              const labelContainer = document.createElement('span');
+              labelContainer.style.display = 'flex';
+              labelContainer.style.alignItems = 'center';
+              const value = document.createElement('span');
+              value.classList.add('text-gray-800', 'dark:text-gray-100');
+              value.style.fontSize = '30px';
+              value.style.lineHeight = '1.2';
+              value.style.fontWeight = '700';
+              value.style.marginRight = '8px';
+              value.style.pointerEvents = 'none';
+              const label = document.createElement('span');
+              label.classList.add('text-gray-500', 'dark:text-gray-400');
+              label.style.fontSize = '14px';
+              label.style.lineHeight = '1.4';
               const theValue = c.data.datasets[item.datasetIndex!].data.reduce(
                 (a, b) => (a as number) + (b as number),
-                0
+                0,
               );
               const valueText = document.createTextNode(
-                formatValue(theValue as number)
+                formatValue(theValue as number),
               );
               const labelText = document.createTextNode(item.text);
               value.appendChild(valueText);
@@ -227,7 +247,7 @@ function BarChart01({ data, width, height }: BarChart01Props) {
       chart.options.plugins!.tooltip!.backgroundColor = tooltipBgColor.light;
       chart.options.plugins!.tooltip!.borderColor = tooltipBorderColor.light;
     }
-    chart.update("none");
+    chart.update('none');
   }, [currentTheme]);
 
   return (

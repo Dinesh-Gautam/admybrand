@@ -1,8 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useThemeProvider } from "@/utils/theme-provider";
-import { NumberTicker } from "@/components/ui/number-ticker";
+import React, { useRef, useEffect, useState } from 'react';
+import { useThemeProvider } from '@/utils/theme-provider';
+import { NumberTicker } from '@/components/ui/number-ticker';
 
-import { chartColors } from "./ChartjsConfig";
+import { chartColors } from './ChartjsConfig';
 import {
   Chart,
   LineController,
@@ -13,11 +13,11 @@ import {
   TimeScale,
   Tooltip,
   ChartData,
-} from "chart.js";
-import "chartjs-adapter-moment";
+} from 'chart.js';
+import 'chartjs-adapter-moment';
 
 // Import utilities
-import { adjustColorOpacity, getCssVariable, formatValue } from "@/utils/chart";
+import { adjustColorOpacity, getCssVariable, formatValue } from '@/utils/chart';
 
 Chart.register(
   LineController,
@@ -26,12 +26,24 @@ Chart.register(
   PointElement,
   LinearScale,
   TimeScale,
-  Tooltip
+  Tooltip,
 );
 
+/**
+ * Props for the RealtimeChart component.
+ */
 interface RealtimeChartProps {
-  data: ChartData<"line">;
+  /**
+   * The data to be displayed in the real-time line chart.
+   */
+  data: ChartData<'line'>;
+  /**
+   * The width of the chart canvas.
+   */
   width: number;
+  /**
+   * The height of the chart canvas.
+   */
   height: number;
 }
 
@@ -51,7 +63,7 @@ const getChartOptions = (
   tooltipTitleColor: any,
   tooltipBodyColor: any,
   tooltipBgColor: any,
-  tooltipBorderColor: any
+  tooltipBorderColor: any,
 ) => ({
   layout: {
     padding: CHART_LAYOUT_PADDING,
@@ -73,13 +85,13 @@ const getChartOptions = (
       },
     },
     x: {
-      type: "time" as "time",
+      type: 'time' as 'time',
       time: {
-        parser: "hh:mm:ss",
-        unit: "second" as "second",
-        tooltipFormat: "MMM DD, H:mm:ss a",
+        parser: 'hh:mm:ss',
+        unit: 'second' as 'second',
+        tooltipFormat: 'MMM DD, H:mm:ss a',
         displayFormats: {
-          second: "H:mm:ss",
+          second: 'H:mm:ss',
         },
       },
       border: {
@@ -101,7 +113,7 @@ const getChartOptions = (
     },
     tooltip: {
       titleFont: {
-        weight: "bold" as "bold",
+        weight: 'bold' as 'bold',
       },
       callbacks: {
         label: (context: any) => formatValue(context.parsed.y),
@@ -116,19 +128,27 @@ const getChartOptions = (
   },
   interaction: {
     intersect: false,
-    mode: "nearest" as "nearest",
+    mode: 'nearest' as 'nearest',
   },
   maintainAspectRatio: false,
   resizeDelay: RESIZE_DELAY,
 });
 
+/**
+ * Renders a real-time line chart with dynamic updates, a number ticker, and deviation display.
+ * @param {RealtimeChartProps} props - The component props.
+ * @param {ChartData<'line'>} props.data - The data for the real-time line chart.
+ * @param {number} props.width - The width of the chart.
+ * @param {number} props.height - The height of the chart.
+ * @returns {JSX.Element} The RealtimeChart component.
+ */
 const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
   const [chart, setChart] = useState<Chart | null>(null);
   const [value, setValue] = useState(57.81);
   const canvas = useRef<HTMLCanvasElement>(null);
   const chartDeviation = useRef<HTMLDivElement>(null);
   const { currentTheme } = useThemeProvider();
-  const darkMode = currentTheme === "dark";
+  const darkMode = currentTheme === 'dark';
   const {
     textColor,
     gridColor,
@@ -143,7 +163,7 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
     if (!ctx) return;
 
     const newChart = new Chart(ctx, {
-      type: "line",
+      type: 'line',
       data: data,
       options: getChartOptions(
         darkMode,
@@ -152,7 +172,7 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
         tooltipTitleColor,
         tooltipBodyColor,
         tooltipBgColor,
-        tooltipBorderColor
+        tooltipBorderColor,
       ),
     });
     setChart(newChart);
@@ -177,28 +197,28 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
       const diff =
         ((currentValue - previousValue) / previousValue) *
         PERCENTAGE_MULTIPLIER;
-      chartDeviation.current.innerHTML = `${diff > 0 ? "+" : ""}${diff.toFixed(
-        2
+      chartDeviation.current.innerHTML = `${diff > 0 ? '+' : ''}${diff.toFixed(
+        2,
       )}%`;
 
       if (diff < 0) {
         chartDeviation.current.style.backgroundColor = adjustColorOpacity(
-          getCssVariable("--color-red-500"),
-          DEVIATION_BACKGROUND_OPACITY
+          getCssVariable('--color-red-500'),
+          DEVIATION_BACKGROUND_OPACITY,
         );
-        chartDeviation.current.style.color = getCssVariable("--color-red-700");
+        chartDeviation.current.style.color = getCssVariable('--color-red-700');
       } else {
         chartDeviation.current.style.backgroundColor = adjustColorOpacity(
-          getCssVariable("--color-green-500"),
-          DEVIATION_BACKGROUND_OPACITY
+          getCssVariable('--color-green-500'),
+          DEVIATION_BACKGROUND_OPACITY,
         );
         chartDeviation.current.style.color =
-          getCssVariable("--color-green-700");
+          getCssVariable('--color-green-700');
       }
     }
 
     chart.data = data;
-    chart.update("none");
+    chart.update('none');
   }, [data, chart]);
 
   useEffect(() => {
@@ -221,7 +241,7 @@ const RealtimeChart = ({ data, width, height }: RealtimeChartProps) => {
       chart.options.plugins!.tooltip!.backgroundColor = tooltipBgColor.light;
       chart.options.plugins!.tooltip!.borderColor = tooltipBorderColor.light;
     }
-    chart.update("none");
+    chart.update('none');
   }, [
     currentTheme,
     chart,

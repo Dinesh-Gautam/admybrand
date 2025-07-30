@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { useThemeProvider } from "@/utils/theme-provider";
+import React, { useRef, useEffect, useState } from 'react';
+import { useThemeProvider } from '@/utils/theme-provider';
 
-import { chartColors } from "./ChartjsConfig";
+import { chartColors } from './ChartjsConfig';
 import {
   Chart,
   BarController,
@@ -11,10 +11,10 @@ import {
   Tooltip,
   Legend,
   ChartData,
-} from "chart.js";
+} from 'chart.js';
 
 // Import utilities
-import { formatValue } from "@/utils/chart";
+import { formatValue } from '@/utils/chart';
 
 Chart.register(
   BarController,
@@ -22,20 +22,40 @@ Chart.register(
   LinearScale,
   CategoryScale,
   Tooltip,
-  Legend
+  Legend,
 );
 
+/**
+ * Props for the BarChart04 component.
+ */
 interface BarChart04Props {
-  data: ChartData<"bar">;
+  /**
+   * The data to be displayed in the bar chart.
+   */
+  data: ChartData<'bar'>;
+  /**
+   * The width of the chart canvas.
+   */
   width: number;
+  /**
+   * The height of the chart canvas.
+   */
   height: number;
 }
 
+/**
+ * Renders a bar chart with custom styling.
+ * @param {BarChart04Props} props - The component props.
+ * @param {ChartData<'bar'>} props.data - The data for the bar chart.
+ * @param {number} props.width - The width of the chart.
+ * @param {number} props.height - The height of the chart.
+ * @returns {JSX.Element} The BarChart04 component.
+ */
 function BarChart04({ data, width, height }: BarChart04Props) {
   const [chart, setChart] = useState<Chart | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const { currentTheme } = useThemeProvider();
-  const darkMode = currentTheme === "dark";
+  const darkMode = currentTheme === 'dark';
   const {
     textColor,
     gridColor,
@@ -49,7 +69,7 @@ function BarChart04({ data, width, height }: BarChart04Props) {
     if (!ctx) return;
     // eslint-disable-next-line no-unused-vars
     const newChart = new Chart(ctx, {
-      type: "bar",
+      type: 'bar',
       data: data,
       options: {
         layout: {
@@ -75,7 +95,7 @@ function BarChart04({ data, width, height }: BarChart04Props) {
             },
           },
           x: {
-            type: "category",
+            type: 'category',
             border: {
               display: false,
             },
@@ -93,7 +113,7 @@ function BarChart04({ data, width, height }: BarChart04Props) {
           },
           tooltip: {
             callbacks: {
-              title: () => "", // Disable tooltip title
+              title: () => '', // Disable tooltip title
               label: (context) => formatValue(context.parsed.y),
             },
             bodyColor: darkMode
@@ -109,7 +129,7 @@ function BarChart04({ data, width, height }: BarChart04Props) {
         },
         interaction: {
           intersect: false,
-          mode: "nearest",
+          mode: 'nearest',
         },
         animation: {
           duration: 500,
@@ -141,7 +161,7 @@ function BarChart04({ data, width, height }: BarChart04Props) {
       chart.options.plugins!.tooltip!.backgroundColor = tooltipBgColor.light;
       chart.options.plugins!.tooltip!.borderColor = tooltipBorderColor.light;
     }
-    chart.update("none");
+    chart.update('none');
   }, [currentTheme]);
 
   return (
