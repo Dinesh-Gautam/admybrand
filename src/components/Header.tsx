@@ -94,6 +94,8 @@ const Header = ({ variant, smartAlerts }: HeaderProps) => {
                 name: 'ADmyBrand',
                 avatar: Logo,
                 role: 'Admin',
+                email: 'admin@admybrand.com',
+                image: '',
               }}
               align="right"
             />

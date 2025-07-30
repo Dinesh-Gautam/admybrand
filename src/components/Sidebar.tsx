@@ -1,87 +1,67 @@
 'use client';
-import React, { useState, useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { cva, VariantProps } from 'class-variance-authority';
+import { useSidebar } from '@/context/SidebarContext';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { cn } from '@/lib/utils';
 import ExpandCollapseIcon from './icons/ExpandCollapseIcon';
 import { SmartAlertsFeed } from './dashboard/SmartAlertsFeed';
 import SidebarHeader from './SidebarHeader';
 import SidebarNav from './SidebarNav';
-import { useSidebar } from '@/context/SidebarContext';
 
-interface SidebarProps {
-  variant?: 'default' | 'v2';
-}
+const sidebarVariants = cva(
+  'flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 p-4 transition-all duration-200 ease-in-out bg-transparent',
+  {
+    variants: {
+      variant: {
+        default: 'rounded-r-2xl shadow-xs',
+        v2: 'border-r border-gray-200 dark:border-gray-700/60',
+      },
+      sidebarOpen: {
+        true: 'translate-x-0 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl',
+        false: '-translate-x-64',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+    },
+  },
+);
 
-const Sidebar = ({ variant = 'default' }: SidebarProps) => {
-  const { sidebarOpen, setSidebarOpen, alertsOpen, setAlertsOpen } =
+interface SidebarProps extends VariantProps<typeof sidebarVariants> {}
+
+/**
+ * Sidebar component that provides navigation and access to other features.
+ * It can be collapsed or expanded, and its state is persisted in localStorage.
+ * @param {SidebarProps} props - The props for the component.
+ * @param {('default'|'v2')} [props.variant='default'] - The visual variant of the sidebar.
+ */
+const Sidebar = ({ variant }: SidebarProps) => {
+  const { sidebarOpen, setAlertsOpen, alertsOpen, sidebar, trigger } =
     useSidebar();
-  const pathname = usePathname();
-  const trigger = useRef<HTMLButtonElement | null>(null);
-  const sidebar = useRef<HTMLDivElement>(null);
-
-  const [sidebarExpanded, setSidebarExpanded] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
-      return storedSidebarExpanded === 'true';
-    }
-    return false;
-  });
-
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }: MouseEvent) => {
-      if (!sidebar.current || !trigger.current) return;
-      if (
-        !sidebarOpen ||
-        sidebar.current.contains(target as Node) ||
-        trigger.current.contains(target as Node)
-      )
-        return;
-      setSidebarOpen(false);
-    };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
-  }, [sidebarOpen]);
-
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }: KeyboardEvent) => {
-      if (!sidebarOpen || keyCode !== 27) return;
-      setSidebarOpen(false);
-    };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
-  }, [sidebarOpen]);
+  const [sidebarExpanded, setSidebarExpanded] = useLocalStorage(
+    'sidebar-expanded',
+    false,
+  );
 
   useEffect(() => {
-    localStorage.setItem('sidebar-expanded', sidebarExpanded.toString());
-    if (sidebarExpanded) {
-      document.body.classList.add('sidebar-expanded');
-    } else {
-      document.body.classList.remove('sidebar-expanded');
-    }
+    document.body.classList.toggle('sidebar-expanded', sidebarExpanded);
   }, [sidebarExpanded]);
 
   return (
     <div className="min-w-fit">
       <div
-        className={`fixed inset-0 bg-gray-900/30 z-40 lg:hidden lg:z-auto transition-opacity duration-200 ${
-          sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
+        className={cn(
+          'fixed inset-0 bg-gray-900/30 z-40 lg:hidden lg:z-auto transition-opacity duration-200',
+          sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none',
+        )}
         aria-hidden="true"
       ></div>
 
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex lg:flex! flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-[100dvh] overflow-y-scroll lg:overflow-y-auto no-scrollbar w-64 lg:w-20 lg:sidebar-expanded:!w-64 2xl:w-64! shrink-0 p-4 transition-all duration-200 ease-in-out bg-transparent  ${
-          sidebarOpen
-            ? 'translate-x-0  bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl'
-            : '-translate-x-64'
-        } ${
-          variant === 'v2'
-            ? 'border-r border-gray-200 dark:border-gray-700/60 '
-            : 'rounded-r-2xl shadow-xs '
-        } `}
+        className={cn(sidebarVariants({ variant, sidebarOpen }))}
       >
         <SidebarHeader trigger={trigger} />
         <SidebarNav
@@ -110,11 +90,12 @@ const Sidebar = ({ variant = 'default' }: SidebarProps) => {
         ></div>
       )}
       <div
-        className={`fixed top-0 right-0 h-full w-xl max-w-full backdrop-blur-xl shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        className={cn(
+          'fixed top-0 right-0 h-full w-xl max-w-full backdrop-blur-xl shadow-lg z-50 transform transition-transform duration-300 ease-in-out',
           alertsOpen
             ? 'translate-x-0 bg-white/60 dark:bg-gray-800/70'
-            : 'translate-x-full bg-white/20 dark:bg-black/10'
-        }`}
+            : 'translate-x-full bg-white/20 dark:bg-black/10',
+        )}
       >
         <SmartAlertsFeed onClose={() => setAlertsOpen(false)} />
       </div>

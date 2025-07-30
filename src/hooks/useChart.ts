@@ -25,7 +25,7 @@ Chart.register(
   Tooltip,
 );
 
-export const useChart = (data: ChartData<'line'>) => {
+export const useLineChart = (data: ChartData<'line'>) => {
   const [chart, setChart] = useState<Chart | null>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const { currentTheme } = useThemeProvider();

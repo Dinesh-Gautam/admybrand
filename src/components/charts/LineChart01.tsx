@@ -1,5 +1,5 @@
 import React from 'react';
-import { useChart } from '../../hooks/useChart';
+import { useLineChart } from '../../hooks/useChart';
 import { ChartData } from 'chart.js';
 
 interface LineChart01Props {
@@ -9,7 +9,7 @@ interface LineChart01Props {
 }
 
 function LineChart01({ data, width, height }: LineChart01Props) {
-  const canvas = useChart(data);
+  const canvas = useLineChart(data);
   return <canvas ref={canvas} width={width} height={height}></canvas>;
 }
 

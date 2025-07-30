@@ -1,49 +1,64 @@
-import React, { useState, ReactNode } from "react";
-import Transition from "@/utils/Transition";
-import InfoIcon from "./icons/InfoIcon";
+import React, { useState, ReactNode } from 'react';
+import Transition from '@/utils/Transition';
+import InfoIcon from './icons/InfoIcon';
 
+/**
+ * Props for the Tooltip component.
+ * @property {ReactNode} children - The content to display inside the tooltip.
+ * @property {string} [className] - Additional classes to apply to the tooltip container.
+ * @property {('light'|'dark'|'default')} [bg='default'] - The background color of the tooltip.
+ * @property {('sm'|'md'|'lg'|'default')} [size='default'] - The size of the tooltip.
+ * @property {('top'|'bottom'|'left'|'right')} [position='top'] - The position of the tooltip relative to the trigger.
+ * @property {ReactNode} [trigger] - The element that triggers the tooltip. Defaults to an InfoIcon.
+ */
 interface TooltipProps {
   children: ReactNode;
   className?: string;
-  bg?: "light" | "dark" | "default";
-  size?: "sm" | "md" | "lg" | "default";
-  position?: "top" | "bottom" | "left" | "right";
+  bg?: 'light' | 'dark' | 'default';
+  size?: 'sm' | 'md' | 'lg' | 'default';
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  trigger?: ReactNode;
 }
 
 const TOOLTIP_SIZE_CLASSES = {
-  lg: "min-w-72 px-3 py-2",
-  md: "min-w-56 px-3 py-2",
-  sm: "min-w-44 px-3 py-2",
-  default: "px-3 py-2",
+  lg: 'min-w-72 px-3 py-2',
+  md: 'min-w-56 px-3 py-2',
+  sm: 'min-w-44 px-3 py-2',
+  default: 'px-3 py-2',
 };
 
 const TOOLTIP_COLOR_CLASSES = {
-  light: "bg-white text-gray-600 border-gray-200",
-  dark: "bg-gray-800 text-gray-100 border-gray-700/60",
+  light: 'bg-white text-gray-600 border-gray-200',
+  dark: 'bg-gray-800 text-gray-100 border-gray-700/60',
   default:
-    "text-gray-600 bg-white dark:bg-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700/60",
+    'text-gray-600 bg-white dark:bg-gray-800 dark:text-gray-100 border-gray-200 dark:border-gray-700/60',
 };
 
 const TOOLTIP_POSITION_OUTER_CLASSES = {
-  right: "left-full top-1/2 -translate-y-1/2",
-  left: "right-full top-1/2 -translate-y-1/2",
-  bottom: "top-full left-1/2 -translate-x-1/2",
-  top: "bottom-full left-1/2 -translate-x-1/2",
+  right: 'left-full top-1/2 -translate-y-1/2',
+  left: 'right-full top-1/2 -translate-y-1/2',
+  bottom: 'top-full left-1/2 -translate-x-1/2',
+  top: 'bottom-full left-1/2 -translate-x-1/2',
 };
 
 const TOOLTIP_POSITION_INNER_CLASSES = {
-  right: "ml-2",
-  left: "mr-2",
-  bottom: "mt-2",
-  top: "mb-2",
+  right: 'ml-2',
+  left: 'mr-2',
+  bottom: 'mt-2',
+  top: 'mb-2',
 };
 
+/**
+ * A tooltip component that displays a message when the user hovers over an element.
+ * @param {TooltipProps} props - The props for the component.
+ */
 const Tooltip = ({
   children,
   className,
-  bg = "default",
-  size = "default",
-  position = "top",
+  bg = 'default',
+  size = 'default',
+  position = 'top',
+  trigger = <InfoIcon />,
 }: TooltipProps) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
@@ -70,7 +85,7 @@ const Tooltip = ({
         aria-expanded={tooltipOpen}
         onClick={(e) => e.preventDefault()}
       >
-        <InfoIcon />
+        {trigger}
       </button>
       <div className={`z-10 absolute ${positionOuterClass}`}>
         <Transition
