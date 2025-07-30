@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Image from 'next/image';
+import MeshImage from '@/images/mesh_bg_2.png';
 import '../css/style.css';
 import ThemeProvider from '@/utils/theme-provider';
 import { SidebarProvider } from '@/context/SidebarContext';
+import { MESH_IMAGE_URI } from '@/constants/styles';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -23,8 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} antialiased text-gray-600 dark:text-gray-400 bg-transparent`}
+        className={`${inter.variable} antialiased text-gray-600 dark:text-gray-400 bg-transparent contain-paint max-h-screen`}
       >
+        <div className="isolate">
+          <img
+            src={MESH_IMAGE_URI}
+            alt="background image"
+            className="absolute top-0 left-0 w-full h-full z-10 opacity-50 dark:opacity-25"
+          />
+          <div className="absolute inset-0 z-20 backdrop-blur-lg" />
+        </div>
         <ThemeProvider>
           <SidebarProvider>{children}</SidebarProvider>;
         </ThemeProvider>
