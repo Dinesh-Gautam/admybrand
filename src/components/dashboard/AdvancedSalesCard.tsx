@@ -1,12 +1,12 @@
-import React from "react";
-import LineChart from "@/components/charts/LineChart01";
-import { AdvancedChartData } from "@/constants/dashboard";
-import DashboardCard from "./DashboardCard";
+import React from 'react';
+import LineChart from '@/components/charts/LineChart01';
+import { AdvancedChartData } from '@/constants/dashboard';
+import DashboardCard from './DashboardCard';
 
-function AcmeAdvancedSalesCard() {
+function AdvancedSalesCard() {
   return (
     <DashboardCard
-      title="Acme Advanced"
+      title="Advanced"
       sales="$17,489"
       percent="-14%"
       chart={
@@ -16,4 +16,4 @@ function AcmeAdvancedSalesCard() {
   );
 }
 
-export default AcmeAdvancedSalesCard;
+export default AdvancedSalesCard;

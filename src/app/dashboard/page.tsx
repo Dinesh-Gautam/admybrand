@@ -1,17 +1,14 @@
-"use client";
+'use client';
 
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import { useState } from "react";
-import DashboardHeader from "./_components/DashboardHeader";
-import DashboardActions from "./_components/DashboardActions";
-import DashboardCardGrid from "./_components/DashboardCardGrid";
-import { FilterState } from "@/components/DropdownFilter";
-import AiInsightSummaryCard from "@/components/dashboard/AiInsightSummaryCard";
+import { FilterState } from '@/components/DropdownFilter';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
+import { useState } from 'react';
+import DashboardActions from './_components/DashboardActions';
+import DashboardCardGrid from './_components/DashboardCardGrid';
+import DashboardHeader from './_components/DashboardHeader';
 
 export default function Dashboard() {
-  const [alerOtsOpen, setAlertsOpen] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     DirectorIndirect: true,
     RealTimeValue: true,
@@ -31,19 +28,9 @@ export default function Dashboard() {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar
-        alertsOpen={alerOtsOpen}
-        setAlertsOpen={setAlertsOpen}
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-      />
+      <Sidebar />
       <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
-        <Header
-          alertsOpen={alerOtsOpen}
-          setAlertsOpen={setAlertsOpen}
-          sidebarOpen={sidebarOpen}
-          setSidebarOpen={setSidebarOpen}
-        />
+        <Header />
 
         <main className="grow">
           <div

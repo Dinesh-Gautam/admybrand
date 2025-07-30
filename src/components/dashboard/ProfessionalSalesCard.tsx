@@ -1,12 +1,12 @@
-import React from "react";
-import LineChart from "@/components/charts/LineChart01";
-import { ProfessionalChartData } from "@/constants/dashboard";
-import DashboardCard from "./DashboardCard";
+import React from 'react';
+import LineChart from '@/components/charts/LineChart01';
+import { ProfessionalChartData } from '@/constants/dashboard';
+import DashboardCard from './DashboardCard';
 
-function AcmeProfessionalSalesCard() {
+function ProfessionalSalesCard() {
   return (
     <DashboardCard
-      title="Acme Professional"
+      title="Professional"
       sales="$9,962"
       percent="+49%"
       chart={
@@ -20,4 +20,4 @@ function AcmeProfessionalSalesCard() {
   );
 }
 
-export default AcmeProfessionalSalesCard;
+export default ProfessionalSalesCard;

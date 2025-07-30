@@ -1,7 +1,14 @@
-import React, { ReactNode } from "react";
-import Link from "next/link";
-import EditMenu from "@/components/DropdownEditMenu";
-import { NumberTicker } from "@/components/ui/number-ticker";
+import React, { ReactNode } from 'react';
+import Link from 'next/link';
+import EditMenu from '@/components/DropdownEditMenu';
+import { NumberTicker } from '@/components/ui/number-ticker';
+import {
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+  Card,
+} from '@/components/ui/Card';
 
 interface DashboardCardProps {
   title: string;
@@ -16,15 +23,13 @@ const DashboardCard = ({
   percent,
   chart,
 }: DashboardCardProps) => {
-  const SalesValue = Number(sales.replace(/[^0-9]/g, ""));
+  const SalesValue = Number(sales.replace(/[^0-9]/g, ''));
 
   return (
-    <div className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 shadow-xs rounded-xl glassmorphism">
-      <div className="px-5 pt-5">
-        <header className="flex justify-between items-start mb-2">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">
-            {title}
-          </h2>
+    <Card className="flex flex-col col-span-full sm:col-span-6 xl:col-span-4 shadow-xs rounded-xl glassmorphism">
+      <CardHeader>
+        <div className="flex justify-between items-start">
+          <CardTitle>{title}</CardTitle>
           <EditMenu align="right">
             <li>
               <Link
@@ -43,7 +48,9 @@ const DashboardCard = ({
               </Link>
             </li>
           </EditMenu>
-        </header>
+        </div>
+      </CardHeader>
+      <CardContent>
         <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase mb-1">
           Sales
         </div>
@@ -59,9 +66,11 @@ const DashboardCard = ({
             {percent}
           </div>
         </div>
-      </div>
-      <div className="grow max-sm:max-h-[128px] xl:max-h-[128px]">{chart}</div>
-    </div>
+      </CardContent>
+      <CardFooter className="grow max-sm:max-h-[128px] xl:max-h-[128px]">
+        {chart}
+      </CardFooter>
+    </Card>
   );
 };
 
