@@ -23,7 +23,7 @@ function DropdownHelp({ align }: DropdownHelpProps) {
     <div className="relative inline-flex">
       <button
         ref={trigger}
-        className={`w-8 h-8 flex items-center justify-center hover:bg-gray-100 lg:hover:bg-gray-200 dark:hover:bg-gray-700/50 dark:lg:hover:bg-gray-800 rounded-full ${
+        className={`w-8 h-8 flex items-center justify-center hover:bg-white/50 dark:hover:bg-gray-800/50 rounded-full ${
           dropdownOpen && 'bg-gray-200 dark:bg-gray-800'
         }`}
         aria-haspopup="true"
