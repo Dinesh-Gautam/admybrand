@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import Transition from "@/utils/Transition";
-import { ChevronDown, Sparkles } from "lucide-react";
+import React, { useState, useRef, useEffect } from 'react';
+import Transition from '@/utils/Transition';
+import { ChevronDown, Sparkles } from 'lucide-react';
 
 interface AiPersonaFilterProps {
   personas: string[];
@@ -28,8 +28,8 @@ function AiPersonaFilter({
         return;
       setDropdownOpen(false);
     };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
+    document.addEventListener('click', clickHandler);
+    return () => document.removeEventListener('click', clickHandler);
   });
 
   useEffect(() => {
@@ -37,8 +37,8 @@ function AiPersonaFilter({
       if (!dropdownOpen || keyCode !== 27) return;
       setDropdownOpen(false);
     };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
+    document.addEventListener('keydown', keyHandler);
+    return () => document.removeEventListener('keydown', keyHandler);
   });
 
   return (
@@ -51,7 +51,7 @@ function AiPersonaFilter({
         aria-expanded={dropdownOpen}
       >
         <Sparkles className="w-4 h-4 mr-2 text-gray-400 dark:text-gray-500" />
-        <span className="mr-2">{selectedPersona ?? "All Personas"}</span>
+        <span className="mr-2">{selectedPersona ?? 'All Personas'}</span>
         <ChevronDown className="w-4 h-4" />
       </button>
       <Transition
@@ -69,19 +69,19 @@ function AiPersonaFilter({
           <div className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase pt-1.5 pb-2 px-4">
             Filter by AI Persona
           </div>
-          <ul className="mb-4">
+          <ul className="mb-1">
             {personas.map((persona) => (
-              <li key={persona} className="py-1 px-3">
+              <li key={persona} className="py-1 px-2">
                 <a
                   href="#"
-                  className={`block text-sm font-medium rounded-md px-3 py-2 ${
-                    persona === (selectedPersona ?? "All")
-                      ? "bg-gray-900/10 dark:bg-gray-700/30 text-gray-800 dark:text-gray-200"
-                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-900/5 hover:dark:bg-gray-700/20"
+                  className={`block text-sm font-medium rounded-md px-3 py-1 ${
+                    persona === (selectedPersona ?? 'All')
+                      ? 'bg-gray-900/10 dark:bg-gray-700/30 text-gray-800 dark:text-gray-200'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-900/5 hover:dark:bg-gray-700/20'
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
-                    onPersonaChange(persona === "All" ? null : persona);
+                    onPersonaChange(persona === 'All' ? null : persona);
                     setDropdownOpen(false);
                   }}
                 >

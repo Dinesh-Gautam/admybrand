@@ -1,7 +1,7 @@
-import React from "react";
-import { StaticImageData } from "next/image";
-import AiPersonaBadge from "./AiPersonaBadge";
-import { motion } from "motion/react";
+import React from 'react';
+import { StaticImageData } from 'next/image';
+import AiPersonaBadge from './AiPersonaBadge';
+import { motion } from 'motion/react';
 
 interface CustomerRowProps {
   image: StaticImageData;

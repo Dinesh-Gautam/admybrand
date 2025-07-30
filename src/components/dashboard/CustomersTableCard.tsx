@@ -1,28 +1,28 @@
-import React, { useState, useMemo } from "react";
-import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from "lucide-react";
-import CustomerRow from "./CustomerRow";
-import { customersData } from "./CustomersData";
-import { useSorting } from "@/hooks/useSorting";
-import { usePagination } from "@/hooks/usePagination";
-import AiPersonaFilter from "./AiPersonaFilter";
-import AiIcon from "@/components/icons/AiIcon";
-import { motion, AnimatePresence } from "motion/react";
-import { FadeIn } from "@/components/magicui/FadeIn";
+import React, { useState, useMemo } from 'react';
+import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import CustomerRow from './CustomerRow';
+import { customersData } from './CustomersData';
+import { useSorting } from '@/hooks/useSorting';
+import { usePagination } from '@/hooks/usePagination';
+import AiPersonaFilter from './AiPersonaFilter';
+import AiIcon from '@/components/icons/AiIcon';
+import { motion, AnimatePresence } from 'motion/react';
+import { FadeIn } from '@/components/magicui/FadeIn';
 
 function CustomersTableCard() {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
 
   const personas = useMemo(() => {
     const allPersonas = customersData.map((c) => c.persona);
-    return ["All", ...Array.from(new Set(allPersonas))];
+    return ['All', ...Array.from(new Set(allPersonas))];
   }, []);
 
   const filteredData = useMemo(() => {
-    if (!selectedPersona || selectedPersona === "All") {
+    if (!selectedPersona || selectedPersona === 'All') {
       return customersData;
     }
     return customersData.filter(
-      (customer) => customer.persona === selectedPersona
+      (customer) => customer.persona === selectedPersona,
     );
   }, [selectedPersona]);
 
@@ -36,7 +36,7 @@ function CustomersTableCard() {
   };
 
   return (
-    <FadeIn className="col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
+    <FadeIn className="flex flex-col col-span-full xl:col-span-8 shadow-xs rounded-xl glassmorphism">
       <header className="px-5 py-2 border-b border-gray-100 dark:border-gray-700/60 flex justify-between items-center">
         <h2 className="font-semibold text-gray-800 dark:text-gray-100">
           Customers
@@ -47,19 +47,19 @@ function CustomersTableCard() {
           onPersonaChange={setSelectedPersona}
         />
       </header>
-      <div className="p-3">
-        <div className="overflow-x-auto">
+      <div className="p-3 flex-1">
+        <div className="overflow-x-auto h-full flex flex-col justify-between">
           <table className="table-auto w-full">
             <thead className="text-xs font-semibold uppercase header">
               <tr>
                 <th
                   className="p-2 whitespace-nowrap cursor-pointer"
-                  onClick={() => handleSort("name")}
+                  onClick={() => handleSort('name')}
                 >
                   <div className="font-semibold text-left flex items-center">
                     Name
                     <span className="ml-2">
-                      {getSortDirection("name") === "asc" ? (
+                      {getSortDirection('name') === 'asc' ? (
                         <ArrowUp size={16} />
                       ) : (
                         <ArrowDown size={16} />
@@ -69,12 +69,12 @@ function CustomersTableCard() {
                 </th>
                 <th
                   className="p-2 whitespace-nowrap cursor-pointer"
-                  onClick={() => handleSort("email")}
+                  onClick={() => handleSort('email')}
                 >
                   <div className="font-semibold text-left flex items-center">
                     Email
                     <span className="ml-2">
-                      {getSortDirection("email") === "asc" ? (
+                      {getSortDirection('email') === 'asc' ? (
                         <ArrowUp size={16} />
                       ) : (
                         <ArrowDown size={16} />
@@ -84,12 +84,12 @@ function CustomersTableCard() {
                 </th>
                 <th
                   className="p-2 whitespace-nowrap cursor-pointer"
-                  onClick={() => handleSort("spent")}
+                  onClick={() => handleSort('spent')}
                 >
                   <div className="font-semibold text-left flex items-center">
                     Spent
                     <span className="ml-2">
-                      {getSortDirection("spent") === "asc" ? (
+                      {getSortDirection('spent') === 'asc' ? (
                         <ArrowUp size={16} />
                       ) : (
                         <ArrowDown size={16} />
@@ -99,12 +99,12 @@ function CustomersTableCard() {
                 </th>
                 <th
                   className="p-2 whitespace-nowrap cursor-pointer"
-                  onClick={() => handleSort("location")}
+                  onClick={() => handleSort('location')}
                 >
                   <div className="font-semibold text-center flex items-center">
                     Country
                     <span className="ml-2">
-                      {getSortDirection("location") === "asc" ? (
+                      {getSortDirection('location') === 'asc' ? (
                         <ArrowUp size={16} />
                       ) : (
                         <ArrowDown size={16} />
@@ -114,13 +114,13 @@ function CustomersTableCard() {
                 </th>
                 <th
                   className="p-2 whitespace-nowrap cursor-pointer"
-                  onClick={() => handleSort("persona")}
+                  onClick={() => handleSort('persona')}
                 >
                   <div className="font-semibold text-left flex items-center">
                     <AiIcon className="w-4 h-4 mr-1.5" />
                     AI Persona
                     <span className="ml-2">
-                      {getSortDirection("persona") === "asc" ? (
+                      {getSortDirection('persona') === 'asc' ? (
                         <ArrowUp size={16} />
                       ) : (
                         <ArrowDown size={16} />
@@ -130,10 +130,7 @@ function CustomersTableCard() {
                 </th>
               </tr>
             </thead>
-            <motion.tbody
-              layout
-              className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60"
-            >
+            <motion.tbody className="text-sm divide-y divide-gray-100 dark:divide-gray-700/60 h-full contain-size">
               <AnimatePresence>
                 {paginatedData.map((customer) => (
                   <CustomerRow
@@ -149,25 +146,25 @@ function CustomersTableCard() {
               </AnimatePresence>
             </motion.tbody>
           </table>
-        </div>
-        <div className="flex justify-between items-center mt-4">
-          <button
-            onClick={prevPage}
-            disabled={currentPage === 1}
-            className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
-          >
-            <ChevronLeft size={"1rem"} />
-          </button>
-          <span className="text-xs font-semibold">
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={nextPage}
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
-          >
-            <ChevronRight size={"1rem"} />
-          </button>
+          <div className="flex justify-between items-center mt-auto pt-4 pb-1">
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
+            >
+              <ChevronLeft size={'1rem'} />
+            </button>
+            <span className="text-xs font-semibold">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded-md disabled:opacity-50"
+            >
+              <ChevronRight size={'1rem'} />
+            </button>
+          </div>
         </div>
       </div>
     </FadeIn>
